@@ -1,0 +1,2690 @@
+const PRODUCTS = [
+  {
+    id: "navy-blazer",
+    name: "藏青单排扣西装外套",
+    brand: "MORLA · 示例商品",
+    price: 799,
+    color: "藏青色",
+    style: "通勤 / 商务",
+    fit: "合身版型",
+    length: "常规衣长",
+    fabric: "羊毛混纺",
+    lining: "部分内衬",
+    season: "春秋",
+    care: "dryClean",
+    careLabel: "建议干洗",
+    image: "assets/products/navy-blazer.jpg",
+    description:
+      "藏青色单排扣西装外套，合身版型、常规衣长，羊毛混纺面料，带部分内衬。适合春秋通勤与商务场合；商品详情建议干洗，具体羊毛含量与内衬厚度需以吊牌为准。",
+    sells: ["利落剪裁，适合通勤与商务", "藏青色较正式，不易过时"],
+    risks: ["干洗维护成本偏高", "正式感较强，休闲搭配受限"],
+    unknownDetails: ["羊毛具体含量", "内衬厚度与透气性", "是否偏码"],
+    wardrobeRisks: ["similarUse"],
+    flags: {
+      hardToMatch: false,
+      trendy: false,
+      extremeFit: false,
+      discomfortRisk: null,
+    },
+    scenarioScores: {
+      commute: 8,
+      casual: 5,
+      social: 6,
+      business: 9,
+      travel: 5,
+      seasonal: 5,
+      universal: 7,
+    },
+    attributeScores: {
+      versatile: 8,
+      texture: 7,
+      comfort: 7,
+      fit: 8,
+      color: 7,
+      design: 6,
+      care: 4,
+      season: 7,
+      value: 6,
+      wardrobe: 8,
+    },
+  },
+  {
+    id: "blue-denim-jacket",
+    name: "水洗蓝牛仔夹克",
+    brand: "FICTIVE · 示例商品",
+    price: 459,
+    color: "水洗蓝",
+    style: "休闲 / 街头",
+    fit: "宽松短款",
+    length: "短款",
+    fabric: "棉质牛仔",
+    lining: "无内衬",
+    season: "春秋",
+    care: "machine",
+    careLabel: "可机洗",
+    image: "assets/products/blue-denim-jacket.jpg",
+    description:
+      "水洗蓝牛仔夹克，宽松短款版型，棉质牛仔面料，无内衬，可机洗。适合春秋日常休闲与叠穿；具体落肩幅度和洗涤后褪色程度未在详情中说明。",
+    sells: ["耐穿且日常百搭", "可机洗，打理省心"],
+    risks: ["休闲感较强，正式场合不合适", "宽松短款可能限制内搭厚度"],
+    unknownDetails: ["落肩幅度", "洗涤褪色程度", "面料克重"],
+    wardrobeRisks: ["similarFit", "similarUse"],
+    flags: {
+      hardToMatch: false,
+      trendy: false,
+      extremeFit: true,
+      discomfortRisk: false,
+    },
+    scenarioScores: {
+      commute: 5,
+      casual: 9,
+      social: 6,
+      business: 3,
+      travel: 6,
+      seasonal: 4,
+      universal: 6,
+    },
+    attributeScores: {
+      versatile: 7,
+      texture: 8,
+      comfort: 7,
+      fit: 7,
+      color: 6,
+      design: 5,
+      care: 9,
+      season: 7,
+      value: 9,
+      wardrobe: 7,
+    },
+  },
+  {
+    id: "colorblock-windbreaker",
+    name: "拼色防风连帽夹克",
+    brand: "MOTION · 示例商品",
+    price: 539,
+    color: "多色拼接",
+    style: "运动休闲",
+    fit: "宽松版型",
+    length: "常规衣长",
+    fabric: "聚酯纤维",
+    lining: "网眼内衬",
+    season: "春秋 / 微雨",
+    care: "machine",
+    careLabel: "可机洗",
+    image: "assets/products/colorblock-windbreaker.jpg",
+    description:
+      "多色拼接防风连帽夹克，宽松版型、常规衣长，聚酯纤维面料，网眼内衬，可机洗。适合春秋通勤、旅行和轻户外；具体防水等级与透气性未在详情中说明。",
+    sells: ["轻便防风，连帽可收纳", "旅行与通勤都能穿"],
+    risks: ["运动感较强，约会或商务场景不够正式", "拼接色不如纯色百搭"],
+    unknownDetails: ["防水等级", "透气性", "拉链与压胶耐用度"],
+    wardrobeRisks: ["similarUse"],
+    flags: {
+      hardToMatch: false,
+      trendy: false,
+      extremeFit: true,
+      discomfortRisk: false,
+    },
+    scenarioScores: {
+      commute: 6,
+      casual: 8,
+      social: 5,
+      business: 3,
+      travel: 9,
+      seasonal: 5,
+      universal: 7,
+    },
+    attributeScores: {
+      versatile: 6,
+      texture: 6,
+      comfort: 8,
+      fit: 6,
+      color: 6,
+      design: 7,
+      care: 9,
+      season: 7,
+      value: 8,
+      wardrobe: 6,
+    },
+  },
+  {
+    id: "black-down-jacket",
+    name: "黑色短款羽绒外套",
+    brand: "NORDEN · 示例商品",
+    price: 899,
+    color: "黑色",
+    style: "保暖休闲",
+    fit: "常规版型",
+    length: "短款",
+    fabric: "聚酯纤维面料，填充羽绒",
+    lining: "聚酯纤维内衬",
+    season: "深秋 / 冬季",
+    care: "machineGentle",
+    careLabel: "轻柔机洗",
+    image: "assets/products/black-down-jacket.jpg",
+    description:
+      "黑色短款羽绒外套，常规版型，聚酯纤维面料，填充羽绒，聚酯纤维内衬，可轻柔机洗。适合深秋和冬季保暖；充绒量、蓬松度和真实保暖温度未在详情中提供。",
+    sells: ["保暖轻便，冬季实用", "黑色耐脏且容易搭配"],
+    risks: ["季节性强，换季后使用频率低", "短款可能限制下摆保暖范围"],
+    unknownDetails: ["充绒量", "蓬松度", "适合的最低温度"],
+    wardrobeRisks: ["similarUse"],
+    flags: {
+      hardToMatch: false,
+      trendy: false,
+      extremeFit: false,
+      discomfortRisk: null,
+    },
+    scenarioScores: {
+      commute: 5,
+      casual: 7,
+      social: 4,
+      business: 3,
+      travel: 6,
+      seasonal: 10,
+      universal: 5,
+    },
+    attributeScores: {
+      versatile: 5,
+      texture: 7,
+      comfort: 8,
+      fit: 6,
+      color: 7,
+      design: 5,
+      care: 6,
+      season: 9,
+      value: 7,
+      wardrobe: 6,
+    },
+  },
+  {
+    id: "red-wool-coat",
+    name: "正红羊毛大衣",
+    brand: "ATELIER · 示例商品",
+    price: 1099,
+    color: "正红色",
+    style: "优雅 / 通勤",
+    fit: "合身中长",
+    length: "中长款",
+    fabric: "羊毛",
+    lining: "有内衬",
+    season: "秋冬",
+    care: "dryClean",
+    careLabel: "建议干洗",
+    image: "assets/products/red-wool-coat.jpg",
+    description:
+      "正红色羊毛大衣，合身中长版型，羊毛面料，带内衬，建议干洗。适合秋冬通勤、约会和正式场合；羊毛具体含量、起球情况和保暖度未在详情中说明。",
+    sells: ["红色醒目，正式感与风格感并存", "羊毛面料质感较好"],
+    risks: ["红色不够百搭", "只能干洗，维护成本高"],
+    unknownDetails: ["羊毛具体含量", "是否容易起球", "真实保暖度"],
+    wardrobeRisks: ["similarUse"],
+    flags: {
+      hardToMatch: false,
+      trendy: false,
+      extremeFit: false,
+      discomfortRisk: null,
+    },
+    scenarioScores: {
+      commute: 8,
+      casual: 6,
+      social: 8,
+      business: 8,
+      travel: 5,
+      seasonal: 9,
+      universal: 7,
+    },
+    attributeScores: {
+      versatile: 6,
+      texture: 9,
+      comfort: 7,
+      fit: 8,
+      color: 4,
+      design: 8,
+      care: 3,
+      season: 8,
+      value: 5,
+      wardrobe: 5,
+    },
+  },
+  {
+    id: "black-leather-jacket",
+    name: "黑色机车皮夹克",
+    brand: "URBAN · 示例商品",
+    price: 759,
+    color: "黑色",
+    style: "街头 / 个性",
+    fit: "修身短款",
+    length: "短款",
+    fabric: "人造皮革",
+    lining: "涤纶内衬",
+    season: "春秋",
+    care: "wipe",
+    careLabel: "擦拭清洁",
+    image: "assets/products/black-leather-jacket.jpg",
+    description:
+      "黑色机车皮夹克，修身短款版型，人造皮革面料，涤纶内衬，建议擦拭清洁。适合春秋街头和个性造型；是否真皮、透气性和尺码偏差未在详情中说明。",
+    sells: ["设计感强，风格辨识度高", "黑色耐脏，造型感突出"],
+    risks: ["风格强烈，搭配门槛较高", "修身版型可能限制内搭"],
+    unknownDetails: ["是否真皮", "透气性", "是否偏码"],
+    wardrobeRisks: ["similarUse"],
+    flags: {
+      hardToMatch: true,
+      trendy: true,
+      extremeFit: true,
+      discomfortRisk: null,
+    },
+    scenarioScores: {
+      commute: 4,
+      casual: 7,
+      social: 8,
+      business: 4,
+      travel: 5,
+      seasonal: 4,
+      universal: 5,
+    },
+    attributeScores: {
+      versatile: 4,
+      texture: 8,
+      comfort: 5,
+      fit: 5,
+      color: 7,
+      design: 9,
+      care: 5,
+      season: 6,
+      value: 6,
+      wardrobe: 4,
+    },
+  },
+];
+
+const EXAMPLE_IDS = ["navy-blazer", "colorblock-windbreaker", "red-wool-coat"];
+
+const SCENARIO_OPTIONS = [
+  { value: "commute", label: "日常通勤" },
+  { value: "casual", label: "日常休闲" },
+  { value: "social", label: "约会或社交" },
+  { value: "business", label: "正式场合或商务活动" },
+  { value: "travel", label: "旅行出游" },
+  { value: "seasonal", label: "换季添置" },
+  { value: "universal", label: "多场景通用" },
+];
+
+const FREQUENCY_OPTIONS = [
+  { value: "weekly4", label: "每周穿 4 次或以上" },
+  { value: "weekly2", label: "每周穿 2—3 次" },
+  { value: "occasional", label: "偶尔穿，主要用于特定场合" },
+  { value: "unsure", label: "目前还不确定" },
+];
+
+const CONCERN_OPTIONS = [
+  { value: "looks", label: "几件都很好看，不知道怎么取舍" },
+  { value: "duplicate", label: "看起来差不多，担心买到重复款" },
+  { value: "price", label: "价格不同，不确定哪件更值得" },
+  { value: "fit", label: "担心版型、长度或上身效果不适合自己" },
+  { value: "fabric", label: "不确定材质、舒适度或保暖程度" },
+  { value: "match", label: "不知道哪件更好搭配现有衣服" },
+  { value: "rare", label: "担心买了之后穿的次数很少" },
+  { value: "need", label: "只是喜欢，但不确定自己是否真的需要" },
+  { value: "other", label: "其他" },
+];
+
+const PRIORITY_OPTIONS = [
+  { value: "versatile", label: "百搭程度" },
+  { value: "texture", label: "面料质感与耐穿程度" },
+  { value: "comfort", label: "舒适度" },
+  { value: "fit", label: "版型和剪裁" },
+  { value: "color", label: "颜色与个人风格" },
+  { value: "design", label: "设计感和独特性" },
+  { value: "care", label: "好打理、洗护方便" },
+  { value: "season", label: "保暖、轻便或季节适用性" },
+  { value: "value", label: "性价比" },
+  { value: "wardrobe", label: "与现有衣橱的搭配程度" },
+];
+
+const WARDROBE_OPTIONS = [
+  { value: "similarColor", label: "有相似颜色" },
+  { value: "similarFit", label: "有相似版型" },
+  { value: "similarUse", label: "有相似用途" },
+  { value: "manySimilar", label: "已经有很多同类衣服" },
+  { value: "none", label: "没有类似款，正想补充一件" },
+  { value: "unsure", label: "不太确定" },
+];
+
+const BUDGET_MODES = [
+  { id: "strict", label: "严格控制", desc: "超出预算的商品或组合不推荐" },
+  { id: "flexible", label: "可以小幅超出", desc: "最多允许超过 10%，超出会提示并扣分" },
+  { id: "unlimited", label: "不设预算上限", desc: "不因价格淘汰商品，只保留参考金额" },
+];
+
+const BUDGET_MODE_LABELS = Object.fromEntries(
+  BUDGET_MODES.map((mode) => [mode.id, mode.label]),
+);
+
+const DEALBREAKER_OPTIONS = [
+  { value: "dryCleanOnly", label: "不接受只能干洗" },
+  { value: "machineWashPreferred", label: "希望方便机洗" },
+  { value: "discomfort", label: "不喜欢扎肤或明显不舒适的面料" },
+  { value: "hardToMatch", label: "不想买难以搭配的款式" },
+  { value: "trendy", label: "不想买太容易过时的款式" },
+  { value: "extremeFit", label: "不能接受过于宽松或过于修身的版型" },
+  { value: "lengthMobility", label: "长度或活动便利性有明确要求" },
+  { value: "temperature", label: "需要适合特定温度或季节" },
+  { value: "other", label: "其他" },
+];
+
+const PRIORITY_LABELS = Object.fromEntries(
+  PRIORITY_OPTIONS.map((option) => [option.value, option.label]),
+);
+
+const CONCERN_ATTRS = {
+  looks: ["design", "color"],
+  duplicate: ["wardrobe", "versatile"],
+  price: ["value"],
+  fit: ["fit", "season"],
+  fabric: ["texture", "comfort", "season"],
+  match: ["versatile", "wardrobe"],
+  rare: ["value", "season"],
+  need: ["value", "versatile"],
+  other: [],
+};
+
+const QUESTIONS = [
+  {
+    id: "scenario",
+    title: "这几件衣服，你主要准备穿去哪里？",
+    text: "先选一个最常用的场景；穿着频率可以补充，不确定也没关系。",
+  },
+  {
+    id: "concerns",
+    title: "你现在最纠结的是什么？",
+    text: "最多选 2 项，也可以跳过。",
+  },
+  {
+    id: "priorities",
+    title: "如果只能优先满足几个条件，你最看重什么？",
+    text: "最多选 3 项，并标记其中最重要的一项；也可以暂时跳过。",
+  },
+  {
+    id: "wardrobe",
+    title: "你的衣橱里已经有类似的衣服吗？",
+    text: "可以多选；“没有类似款”会和其他重复选项互斥。",
+  },
+  {
+    id: "budget",
+    title: "这次的预算准备怎么定？",
+    text: "预算会按最终留下的商品组合计算，而不是只看单件价格。",
+  },
+  {
+    id: "dealbreakers",
+    title: "还有什么是你不能接受的，或希望特别考虑的？",
+    text: "可以全部不选，也可以用一句话补充你的具体要求。",
+  },
+];
+
+const state = {
+  mode: "demo",
+  screen: "home",
+  cartSelected: [],
+  customItems: [],
+  customHint: "",
+  customForm: null,
+  questionIndex: 0,
+  answers: defaultAnswers(),
+  result: null,
+  advancing: false,
+  cartHint: "",
+};
+
+function defaultAnswers() {
+  return {
+    scenario: "",
+    frequency: "",
+    concerns: [],
+    concernNote: "",
+    priorities: [],
+    topPriority: "",
+    wardrobe: [],
+    wardrobeNote: "",
+    budget: "700",
+    budgetMode: "strict",
+    dealbreakers: [],
+    dealbreakerNote: "",
+  };
+}
+
+function cloneAnswers(answers) {
+  return {
+    ...answers,
+    concerns: [...(answers.concerns || [])],
+    priorities: [...(answers.priorities || [])],
+    wardrobe: [...(answers.wardrobe || [])],
+    dealbreakers: [...(answers.dealbreakers || [])],
+  };
+}
+
+function getProduct(id) {
+  return PRODUCTS.find((product) => product.id === id) || null;
+}
+
+function currentItemList() {
+  if (state.mode === "custom") {
+    return state.customItems.map(normalizeCustomItem);
+  }
+  return state.cartSelected.map((id) => getProduct(id)).filter(Boolean);
+}
+
+function normalizeCustomItem(raw) {
+  const price = Number(raw.price) || 0;
+  const careMap = {
+    machine: ["machine", "可机洗"],
+    machineGentle: ["machineGentle", "轻柔机洗"],
+    dryClean: ["dryClean", "建议干洗"],
+    wipe: ["wipe", "擦拭清洁"],
+  };
+  const careEntry = careMap[raw.care] || ["unknown", "待确认"];
+  const color = raw.color || "待确认";
+  const style = raw.style || "待确认";
+  const material = raw.material || "待确认";
+  const category = raw.category || "待确认";
+  const season = raw.season || "待确认";
+  const fit = raw.fit || "待确认";
+  const length = raw.length || "待确认";
+  const pros = splitList(raw.pros);
+  const risks = splitList(raw.risks);
+  const descriptionParts = [
+    raw.note,
+    raw.name,
+    color,
+    style,
+    material,
+    category,
+    season,
+    fit,
+    length,
+  ].filter(Boolean);
+
+  return {
+    id: raw.id,
+    name: raw.name || "未命名衣物",
+    brand: raw.brand || "自定义商品",
+    price,
+    color,
+    style,
+    fit,
+    length,
+    fabric: material,
+    lining: "待确认",
+    season,
+    category,
+    care: careEntry[0],
+    careLabel: careEntry[1],
+    image: raw.image || "",
+    link: raw.link || "",
+    description: descriptionParts.length
+      ? descriptionParts.join("，") + "。"
+      : "用户添加的商品，暂未提供详细信息。",
+    sells: pros.length ? pros : ["用户未填写主要优势"],
+    risks: risks.length ? risks : ["用户未填写需要权衡的地方"],
+    unknownDetails: ["洗护方式以外的细节待确认", "真实穿着效果待确认"],
+    wardrobeRisks: [],
+    flags: {
+      hardToMatch: false,
+      trendy: false,
+      extremeFit: false,
+      discomfortRisk: null,
+    },
+    scenarioScores: {
+      commute: 5,
+      casual: 5,
+      social: 5,
+      business: 5,
+      travel: 5,
+      seasonal: 5,
+      universal: 5,
+    },
+    attributeScores: {
+      versatile: 5,
+      texture: 5,
+      comfort: 5,
+      fit: 5,
+      color: 5,
+      design: 5,
+      care: careScoreByEntry(careEntry[0]),
+      season: 5,
+      value: 5,
+      wardrobe: 5,
+    },
+  };
+}
+
+function careScoreByEntry(care) {
+  if (care === "machine") return 9;
+  if (care === "machineGentle") return 8;
+  if (care === "wipe") return 6;
+  return 4;
+}
+
+function splitList(text) {
+  return String(text || "")
+    .split(/[；;\n]+/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function formatPrice(value) {
+  return `¥${Number(value).toLocaleString("zh-CN")}`;
+}
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
+
+function round(value, digits = 1) {
+  const factor = 10 ** digits;
+  return Math.round(value * factor) / factor;
+}
+
+function average(values) {
+  if (!values.length) return 5;
+  return values.reduce((sum, value) => sum + value, 0) / values.length;
+}
+
+function combinations(items, size) {
+  const result = [];
+  const current = [];
+
+  function walk(start) {
+    if (current.length === size) {
+      result.push([...current]);
+      return;
+    }
+    for (let index = start; index <= items.length - (size - current.length); index += 1) {
+      current.push(items[index]);
+      walk(index + 1);
+      current.pop();
+    }
+  }
+
+  walk(0);
+  return result;
+}
+
+function isBudgetValid(budget) {
+  const parsed = Number(budget);
+  return Number.isFinite(parsed) && parsed > 0;
+}
+
+function getBudgetLimit(budget, budgetMode, budgetValid) {
+  if (budgetMode === "unlimited" || !budgetValid) return Infinity;
+  return budgetMode === "flexible" ? budget * 1.1 : budget;
+}
+
+function normalizeAnswers(answers) {
+  const normalized = {
+    ...defaultAnswers(),
+    ...(answers || {}),
+    concerns: (answers?.concerns || []).slice(0, 2),
+    priorities: (answers?.priorities || []).slice(0, 3),
+    wardrobe: [...(answers?.wardrobe || [])],
+    dealbreakers: [...(answers?.dealbreakers || [])],
+  };
+
+  if (!BUDGET_MODE_LABELS[normalized.budgetMode]) normalized.budgetMode = "strict";
+  if (!normalized.priorities.includes(normalized.topPriority)) {
+    normalized.topPriority = normalized.priorities[0] || "";
+  }
+  return normalized;
+}
+
+function sourceLabel(source) {
+  if (source === "detail") return "商品明确提供";
+  if (source === "infer") return "从描述归纳";
+  return "信息缺失";
+}
+
+function buildContext(answers, selectedProducts) {
+  const normalized = normalizeAnswers(answers);
+  const budget = Number(normalized.budget);
+  const budgetValid = isBudgetValid(budget);
+  const budgetMode = normalized.budgetMode;
+  const budgetLimit = getBudgetLimit(budget, budgetMode, budgetValid);
+  const prices = selectedProducts.map((product) => product.price);
+  const priceMedian =
+    prices.length % 2
+      ? prices[Math.floor(prices.length / 2)]
+      : (prices[prices.length / 2 - 1] + prices[prices.length / 2]) / 2;
+
+  return {
+    normalized,
+    budget,
+    budgetValid,
+    budgetMode,
+    budgetLimit,
+    priceMedian,
+    selectedProducts,
+  };
+}
+
+function careScore(product) {
+  if (product.care === "machine") return 9;
+  if (product.care === "machineGentle") return 8;
+  if (product.care === "wipe") return 6;
+  return 4;
+}
+
+function scoreProduct(product, context) {
+  const normalized = context.normalized;
+  const priorities = normalized.priorities.length
+    ? normalized.priorities
+    : ["versatile", "value"];
+
+  let weighted = 0;
+  let weightTotal = 0;
+  for (const priority of priorities) {
+    let weight = priority === normalized.topPriority ? 1.8 : 1;
+    for (const concern of normalized.concerns) {
+      const attrs = CONCERN_ATTRS[concern] || [];
+      if (attrs.includes(priority)) weight += 0.35;
+    }
+    const value = product.attributeScores[priority] ?? 5;
+    weighted += value * weight;
+    weightTotal += weight;
+  }
+
+  const preferenceScore = weightTotal ? weighted / weightTotal : 5;
+  const scenarioScore = product.scenarioScores[normalized.scenario] ?? 5;
+  const base = scenarioScore * 0.45 + preferenceScore * 0.45 + careScore(product) * 0.1;
+
+  let wardrobePenalty = 0;
+  for (const risk of normalized.wardrobe) {
+    if (product.wardrobeRisks.includes(risk)) wardrobePenalty += 1.2;
+  }
+
+  let frequencyPenalty = 0;
+  if (normalized.frequency === "occasional" && product.price >= context.priceMedian) {
+    frequencyPenalty = 0.4;
+  }
+
+  return round(base - wardrobePenalty - frequencyPenalty, 2);
+}
+
+function buildMatchItems(product, context) {
+  const normalized = context.normalized;
+  const items = [];
+
+  const scenarioScore = product.scenarioScores[normalized.scenario] ?? 5;
+  items.push({
+    label: "场景匹配",
+    status: scenarioScore >= 7 ? "匹配" : scenarioScore >= 5 ? "部分匹配" : "冲突",
+    source: "infer",
+    evidence:
+      scenarioScore >= 7
+        ? "该商品较适合你选择的主要场景"
+        : scenarioScore >= 5
+          ? "该商品与你选择的主要场景契合度一般"
+          : "该商品与你选择的主要场景契合度偏低",
+  });
+
+  for (const priority of normalized.priorities) {
+    const score = product.attributeScores[priority];
+    if (score == null) {
+      items.push({
+        label: PRIORITY_LABELS[priority],
+        status: "未知",
+        source: "missing",
+        evidence: "商品详情未提供足够信息",
+      });
+    } else {
+      items.push({
+        label: PRIORITY_LABELS[priority],
+        status: score >= 7 ? "匹配" : score <= 4 ? "冲突" : "部分匹配",
+        source: "infer",
+        evidence: `从商品描述归纳，${score >= 7 ? "表现较突出" : score <= 4 ? "表现偏弱" : "表现中等"}`,
+      });
+    }
+  }
+
+  if (normalized.wardrobe.includes("none")) {
+    items.push({
+      label: "衣橱重复",
+      status: "匹配",
+      source: "infer",
+      evidence: "你说衣橱中没有类似款，正想补充一件",
+    });
+  } else if (normalized.wardrobe.includes("unsure")) {
+    items.push({
+      label: "衣橱重复",
+      status: "未知",
+      source: "missing",
+      evidence: "你还不确定现有衣橱是否相似，建议翻看后确认",
+    });
+  } else {
+    const overlaps = normalized.wardrobe.filter((risk) =>
+      product.wardrobeRisks.includes(risk),
+    );
+    items.push({
+      label: "衣橱重复",
+      status: overlaps.length ? "冲突" : "部分匹配",
+      source: "infer",
+      evidence: overlaps.length
+        ? `可能与你的已有单品重复：${overlaps.map((risk) => wardrobeLabel(risk)).join("、")}`
+        : "现有衣橱没有明显重复",
+    });
+  }
+
+  if (normalized.dealbreakers.includes("machineWashPreferred")) {
+    items.push({
+      label: "方便机洗",
+      status: product.care === "machine" || product.care === "machineGentle" ? "匹配" : "冲突",
+      source: "detail",
+      evidence: `洗护方式：${product.careLabel}`,
+    });
+  }
+
+  if (normalized.dealbreakers.includes("dryCleanOnly") && product.care === "dryClean") {
+    items.push({
+      label: "不接受只能干洗",
+      status: "冲突",
+      source: "detail",
+      evidence: `洗护方式：${product.careLabel}`,
+    });
+  }
+
+  if (
+    normalized.dealbreakers.includes("hardToMatch") &&
+    product.flags.hardToMatch
+  ) {
+    items.push({
+      label: "不想买难以搭配的款式",
+      status: "冲突",
+      source: "infer",
+      evidence: "商品描述提示风格较强、搭配门槛偏高",
+    });
+  }
+
+  if (normalized.dealbreakers.includes("trendy") && product.flags.trendy) {
+    items.push({
+      label: "不想买太容易过时的款式",
+      status: "冲突",
+      source: "infer",
+      evidence: "商品描述提示它有较强潮流属性",
+    });
+  }
+
+  if (
+    normalized.dealbreakers.includes("extremeFit") &&
+    product.flags.extremeFit
+  ) {
+    items.push({
+      label: "不能接受过于宽松或过于修身的版型",
+      status: "冲突",
+      source: "detail",
+      evidence: `版型描述：${product.fit}`,
+    });
+  }
+
+  if (
+    normalized.dealbreakers.includes("discomfort") &&
+    product.flags.discomfortRisk === true
+  ) {
+    items.push({
+      label: "不喜欢扎肤或明显不舒适的面料",
+      status: "冲突",
+      source: "infer",
+      evidence: "商品描述提示可能有明显不舒适风险",
+    });
+  }
+
+  if (normalized.dealbreakers.includes("lengthMobility")) {
+    items.push({
+      label: "长度或活动便利性有明确要求",
+      status: "未知",
+      source: "missing",
+      evidence: "你提出了相关要求，但商品详情未给出足够信息，需要进一步确认",
+    });
+  }
+
+  if (normalized.dealbreakers.includes("temperature")) {
+    items.push({
+      label: "需要适合特定温度或季节",
+      status: "未知",
+      source: "missing",
+      evidence: "你没有写明具体温度或季节，商品详情也缺少量化指标，需要确认",
+    });
+  }
+
+  if (normalized.budgetMode !== "unlimited" && context.budgetValid && product.price > context.budgetLimit) {
+    items.push({
+      label: "预算",
+      status: "冲突",
+      source: "detail",
+      evidence: `价格 ${formatPrice(product.price)} 超出预算限制`,
+    });
+  }
+
+  return items;
+}
+
+function wardrobeLabel(value) {
+  return (
+    WARDROBE_OPTIONS.find((option) => option.value === value)?.label || value
+  );
+}
+
+function evaluateProducts(context) {
+  const normalized = context.normalized;
+
+  return context.selectedProducts.map((product) => {
+    const blockReasons = [];
+
+    if (
+      normalized.budgetMode !== "unlimited" &&
+      context.budgetValid &&
+      product.price > context.budgetLimit
+    ) {
+      blockReasons.push(
+        normalized.budgetMode === "strict"
+          ? `超出总预算 ${formatPrice(context.budget)}`
+          : "超出预算 10% 的可接受范围",
+      );
+    }
+
+    if (normalized.dealbreakers.includes("dryCleanOnly") && product.care === "dryClean") {
+      blockReasons.push("只能干洗，不符合你的要求");
+    }
+    if (
+      normalized.dealbreakers.includes("hardToMatch") &&
+      product.flags.hardToMatch
+    ) {
+      blockReasons.push("商品详情提示它较难搭配");
+    }
+    if (normalized.dealbreakers.includes("trendy") && product.flags.trendy) {
+      blockReasons.push("商品详情提示它有较强潮流属性");
+    }
+    if (
+      normalized.dealbreakers.includes("extremeFit") &&
+      product.flags.extremeFit
+    ) {
+      blockReasons.push("版型过于宽松或修身，可能不符合你的要求");
+    }
+    if (
+      normalized.dealbreakers.includes("discomfort") &&
+      product.flags.discomfortRisk === true
+    ) {
+      blockReasons.push("商品详情提示可能有明显不舒适风险");
+    }
+
+    const matchItems = buildMatchItems(product, context);
+    const conflicts = matchItems.filter((item) => item.status === "冲突");
+    const unknowns = matchItems.filter((item) => item.status === "未知");
+
+    return {
+      product,
+      blockReasons,
+      eligible: blockReasons.length === 0,
+      score: scoreProduct(product, context),
+      matchItems,
+      conflicts,
+      unknowns,
+    };
+  });
+}
+
+function buildCandidates(evaluated, context) {
+  const eligible = evaluated.filter((entry) => entry.eligible);
+  const { budget, budgetValid, budgetMode, budgetLimit, normalized } = context;
+  const candidates = [];
+
+  for (let size = 1; size <= 2; size += 1) {
+    const groups = combinations(eligible, size);
+
+    for (const group of groups) {
+      const totalPrice = group.reduce((sum, entry) => sum + entry.product.price, 0);
+      if (budgetMode !== "unlimited" && budgetValid && totalPrice > budgetLimit) {
+        continue;
+      }
+
+      const baseScore = group.reduce((sum, entry) => sum + entry.score, 0);
+      const uniqueTypes = new Set(group.map((entry) => entry.product.style));
+      const diversityBonus = group.length > 1 && uniqueTypes.size > 1 ? 0.8 : 0;
+      const sameTypePenalty =
+        group.length > 1 ? (group.length - uniqueTypes.size) * -0.6 : 0;
+      const wardrobeOverlap = group.reduce((sum, entry) => {
+        const overlaps = normalized.wardrobe.filter((risk) =>
+          entry.product.wardrobeRisks.includes(risk),
+        );
+        return sum + overlaps.length;
+      }, 0);
+      const wardrobePenalty = wardrobeOverlap * -1.1;
+
+      const overAmount =
+        budgetMode === "flexible" && budgetValid
+          ? Math.max(totalPrice - budget, 0)
+          : 0;
+      const overRatio = budget > 0 ? overAmount / budget : 0;
+      const isOverBudget = overAmount > 0;
+
+      let budgetAdjust = 0;
+      if (budgetMode === "strict" && budgetValid) {
+        budgetAdjust = clamp(((budget - totalPrice) / budget) * 1.2, 0, 1.2);
+      } else if (budgetMode === "flexible" && budgetValid) {
+        budgetAdjust = isOverBudget
+          ? -overRatio * 10
+          : clamp(((budget - totalPrice) / budget) * 0.8, 0, 0.8);
+      }
+
+      candidates.push({
+        entries: group,
+        items: group.map((entry) => entry.product),
+        totalPrice,
+        score: round(
+          baseScore +
+            sameTypePenalty +
+            diversityBonus +
+            wardrobePenalty +
+            budgetAdjust,
+          2,
+        ),
+        budgetMode,
+        budgetLimit,
+        isOverBudget,
+        overAmount,
+      });
+    }
+  }
+
+  return candidates.sort((a, b) => b.score - a.score);
+}
+
+function buildKeyReasons(best, context) {
+  if (!best.items.length) {
+    return [
+      "你比较的商品都踩中了至少一个硬性条件，与其将就，不如先都不买。",
+      "你最看重的需求和这些商品没有形成明确匹配，硬留一件很可能后悔。",
+      "清空购物车不是失败，说明这次筛选帮你省下了一次不必要的下单。",
+    ];
+  }
+
+  const { normalized, budget, budgetValid, budgetMode } = context;
+  const keep = best.items;
+  const factorText = normalized.priorities.length
+    ? normalized.priorities.map((priority) => PRIORITY_LABELS[priority]).join("和")
+    : "通用需求";
+  const total = best.totalPrice;
+  const remaining = budgetValid ? budget - total : 0;
+  const scenarioLabel =
+    SCENARIO_OPTIONS.find((option) => option.value === normalized.scenario)?.label ||
+    "日常";
+
+  let budgetReason = "这套组合没有触碰你设定的硬性条件。";
+  if (budgetMode === "strict" && budgetValid) {
+    budgetReason = `总价 ${formatPrice(total)} 在 ${formatPrice(budget)} 预算内，剩余 ${formatPrice(remaining)}。`;
+  } else if (budgetMode === "flexible" && budgetValid) {
+    budgetReason = best.isOverBudget
+      ? `总价 ${formatPrice(total)}，比预算 ${formatPrice(budget)} 超出 ${formatPrice(best.overAmount)}，仍在 10% 容忍范围内。`
+      : `总价 ${formatPrice(total)} 在 ${formatPrice(budget)} 预算内，剩余 ${formatPrice(remaining)}。`;
+  } else if (budgetMode === "unlimited") {
+    budgetReason = budgetValid
+      ? `总价 ${formatPrice(total)}，本次不设预算上限，${formatPrice(budget)} 仅作参考。`
+      : `总价 ${formatPrice(total)}，本次不设预算上限。`;
+  }
+
+  return [
+    keep.length === 1
+      ? `${keep[0].name}在你选择的${scenarioLabel}场景里最不容易出错。`
+      : `这两件在${scenarioLabel}场景里互补，而不是简单重复。`,
+    `你优先看重的${factorText}，${keep.length === 1 ? "它整体接得住" : "这套组合能接住"}。`,
+    budgetReason,
+  ];
+}
+
+function buildProductFields(product) {
+  const fields = [
+    { label: "颜色与风格", value: `${product.color} · ${product.style}`, source: "detail" },
+    { label: "版型、剪裁和衣长", value: `${product.fit} · ${product.length}`, source: "detail" },
+    { label: "面料成分及材质", value: product.fabric, source: "detail" },
+    { label: "内衬", value: product.lining, source: "detail" },
+    { label: "适用季节与场景", value: product.season, source: "detail" },
+    { label: "洗护方式", value: product.careLabel, source: "detail" },
+    { label: "主要卖点", value: product.sells.join("；"), source: "infer" },
+    { label: "潜在缺点", value: product.risks.join("；"), source: "infer" },
+  ];
+  return fields.filter((field) => field.value);
+}
+
+function buildAnalysis(entry, context) {
+  const product = entry.product;
+  const fields = buildProductFields(product);
+  const knownMatches = entry.matchItems.filter(
+    (item) => item.status !== "未知" && item.status !== "冲突",
+  );
+  const conflicts = entry.conflicts;
+  const unknowns = [...entry.unknowns];
+
+  for (const detail of product.unknownDetails) {
+    if (!unknowns.some((item) => item.label === detail)) {
+      unknowns.push({ label: detail, status: "未知", source: "missing", evidence: "商品详情未提供" });
+    }
+  }
+
+  const matchPercent = clamp(Math.round((entry.score / 9.5) * 100), 0, 100);
+
+  return {
+    product,
+    excerpt: product.description,
+    fields,
+    matches: knownMatches,
+    conflicts,
+    unknowns,
+    matchPercent,
+  };
+}
+
+function buildComparison(analyses, keptIds) {
+  return analyses.map((analysis) => {
+    const product = analysis.product;
+    const isKeep = keptIds.includes(product.id);
+    const conflictText =
+      analysis.conflicts[0]?.label || analysis.conflicts[0]?.evidence || "暂无硬性冲突";
+    const riskText = product.risks[0] || "暂无明确风险";
+    const unknownText = analysis.unknowns[0]?.label || "暂无未知项";
+
+    return {
+      product,
+      isKeep,
+      matchPercent: analysis.matchPercent,
+      bestReason: product.sells[0],
+      risk: riskText,
+      difference: isKeep
+        ? "综合匹配更接近你的需求"
+        : conflictText !== "暂无硬性冲突"
+          ? `主要冲突：${conflictText}`
+          : "相对其他商品优势不够突出",
+      unknown: unknownText,
+      final: isKeep ? "留下" : "淘汰",
+    };
+  });
+}
+
+function decide(answers, selectedIds, mode = "demo") {
+  const selectedProducts =
+    mode === "custom"
+      ? state.customItems.map((item) => normalizeCustomItem(item))
+      : selectedIds.map((id) => getProduct(id)).filter(Boolean);
+
+  if (selectedProducts.length < 1) {
+    return {
+      type: "confirm",
+      headline: "还需要再选几件才能比较",
+      detail:
+        mode === "custom"
+          ? "请先添加至少一件商品。"
+          : "购物车里至少选择 2 件商品，我才能帮你取舍。",
+      keep: [],
+      totalPrice: 0,
+      reasons: [],
+      analyses: [],
+      comparison: [],
+      summary: "请先返回购物车，选择 2—4 件商品。",
+    };
+  }
+
+  if (mode !== "custom" && selectedProducts.length < 2) {
+    return {
+      type: "confirm",
+      headline: "还需要再选几件才能比较",
+      detail: "购物车里至少选择 2 件商品，我才能帮你取舍。",
+      keep: [],
+      totalPrice: 0,
+      reasons: [],
+      analyses: [],
+      comparison: [],
+      summary: "请先返回购物车，选择 2—4 件商品。",
+    };
+  }
+
+  const context = buildContext(answers, selectedProducts);
+  const evaluated = evaluateProducts(context);
+  const eligible = evaluated.filter((entry) => entry.eligible);
+  const candidates = buildCandidates(evaluated, context);
+  const needsBudget = context.budgetMode !== "unlimited";
+
+  if (needsBudget && !context.budgetValid) {
+    return {
+      type: "confirm",
+      headline: "我还差一个关键信息",
+      detail: "总预算还没填清楚，先确认金额我再帮你算。",
+      keep: [],
+      totalPrice: 0,
+      reasons: [],
+      analyses: evaluated.map((entry) => buildAnalysis(entry, context)),
+      comparison: evaluated.length > 1 ? buildComparison(evaluated.map((entry) => buildAnalysis(entry, context)), []) : [],
+      summary: "确认预算后，我才能继续做组合筛选。",
+    };
+  }
+
+  if (eligible.length === 0) {
+    const bestNone = { items: [], totalPrice: 0 };
+    const analyses = evaluated.map((entry) => buildAnalysis(entry, context));
+    return {
+      type: "none",
+      headline: "这次我建议你一件都别留",
+      detail: "不是替你省钱，是这些商品都不够合适。",
+      keep: [],
+      totalPrice: 0,
+      budgetMode: context.budgetMode,
+      budgetLimit: context.budgetLimit,
+      isOverBudget: false,
+      overAmount: 0,
+      reasons: buildKeyReasons(bestNone, context),
+      analyses,
+      comparison: analyses.length > 1 ? buildComparison(analyses, []) : [],
+      summary:
+        "购物车里的选择可以先放一放。你没有为不合适的商品将就，这比买错更划算。",
+    };
+  }
+
+  const best = candidates[0];
+  if (!best) {
+    const analyses = evaluated.map((entry) => buildAnalysis(entry, context));
+    return {
+      type: "none",
+      headline: "这次我建议你一件都别留",
+      detail: "符合条件的组合暂时没有找到。",
+      keep: [],
+      totalPrice: 0,
+      reasons: buildKeyReasons({ items: [], totalPrice: 0 }, context),
+      analyses,
+      comparison: analyses.length > 1 ? buildComparison(analyses, []) : [],
+      summary: "先不买，等你补充更多信息后再比较。",
+    };
+  }
+
+  const analyses = evaluated.map((entry) => buildAnalysis(entry, context));
+  const keptIds = best.items.map((item) => item.id);
+
+  return {
+    type: "recommend",
+    headline:
+      best.items.length === 1
+        ? "我建议你只留下这一件"
+        : "这两件可以一起留",
+    detail:
+      best.items.length === 1
+        ? "就买最不会后悔的那件。"
+        : "先看总价和重复风险，再决定要不要都留。",
+    keep: best.items,
+    totalPrice: best.totalPrice,
+    budgetMode: best.budgetMode,
+    budgetLimit: best.budgetLimit,
+    isOverBudget: best.isOverBudget,
+    overAmount: best.overAmount,
+    reasons: buildKeyReasons(best, context),
+    analyses,
+    comparison: analyses.length > 1 ? buildComparison(analyses, keptIds) : [],
+    summary:
+      best.items.length === 1
+        ? "先留下最匹配你需求的那件。其他商品不是不好，只是在这次场景里不如它更值得。"
+        : "这两件可以互相补充，但下单前先确认你是否真的需要同时留下，而不是为了“两件更划算”勉强凑单。",
+  };
+}
+
+function render() {
+  const app = document.getElementById("app");
+  if (!app) return;
+
+  if (state.screen === "home") {
+    app.innerHTML = renderHome();
+  } else if (state.screen === "custom-items") {
+    app.innerHTML = renderCustomItems();
+  } else if (state.screen === "cart") {
+    app.innerHTML = renderCart();
+  } else if (state.screen === "questions") {
+    app.innerHTML = renderQuestions();
+  } else if (state.screen === "summary") {
+    app.innerHTML = renderSummary();
+  } else if (state.screen === "result") {
+    app.innerHTML = renderResult();
+  }
+}
+
+function topbar(showBack = false) {
+  return `
+    <div class="topbar">
+      <button class="brand" data-action="go-home">
+        <span class="brand__mark">衣</span>
+        <span class="brand__text">
+          <span class="brand__name">衣见</span>
+          <span class="brand__tag">AI 购物搭子</span>
+        </span>
+      </button>
+      ${
+        showBack
+          ? '<button class="text-btn" data-action="go-home">回到首页</button>'
+          : '<span class="text-btn" aria-hidden="true">把纠结聊明白</span>'
+      }
+    </div>
+  `;
+}
+
+function renderHome() {
+  return `
+    ${topbar(false)}
+    <section class="page hero">
+      <span class="hero__eyebrow">你的 AI 购物搭子</span>
+      <h1>你负责心动，<span class="highlight">我负责决定</span></h1>
+      <p class="hero__sub">购物车里几件衣服都很喜欢，却不知道哪件值得买？把选择交给衣见，一键帮你解决。</p>
+      <div class="hero__features">
+        <span>匹配日常：不只看参数，更考虑真实穿着场景</span>
+        <span>考虑衣橱：识别相似款，减少重复购买</span>
+        <span>尊重选择：不盲目劝买，也可以建议一件都不买</span>
+      </div>
+      <div class="hero__cta">
+        <button class="btn btn--primary" data-action="start-custom">帮我结束纠结</button>
+        <button class="btn btn--ghost" data-action="start-demo">DEMO体验</button>
+      </div>
+      <p class="hero__footer">不替你冲动下单，只帮你把选择想明白。</p>
+    </section>
+  `;
+}
+
+function renderCart() {
+  const selectedSet = new Set(state.cartSelected);
+  const selectedProducts = state.cartSelected.map(getProduct).filter(Boolean);
+  const totalPrice = selectedProducts.reduce((sum, product) => sum + product.price, 0);
+  const canStart = state.cartSelected.length >= 2 && state.cartSelected.length <= 4;
+
+  const productCards = PRODUCTS.map((product) => {
+    const selected = selectedSet.has(product.id);
+    const disabled = !selected && state.cartSelected.length >= 4;
+    return `
+      <article class="cart-item ${selected ? "cart-item--selected" : ""}">
+        <button
+          class="cart-item__check"
+          data-action="toggle-cart"
+          data-id="${product.id}"
+          ${disabled ? "disabled" : ""}
+          aria-label="选择 ${escapeHtml(product.name)}"
+        >
+          ${selected ? "✓" : ""}
+        </button>
+        <div class="cart-item__media product-media">
+          <img src="${product.image}" alt="${escapeHtml(product.name)}" loading="lazy" />
+          <span class="product-media__fallback">图片加载失败</span>
+        </div>
+        <div class="cart-item__body">
+          <div class="cart-item__top">
+            <div>
+              <p class="cart-item__brand">${escapeHtml(product.brand)}</p>
+              <h2 class="cart-item__name">${escapeHtml(product.name)}</h2>
+            </div>
+            <strong class="cart-item__price">${formatPrice(product.price)}</strong>
+          </div>
+          <p class="cart-item__spec">${escapeHtml(product.color)} · ${escapeHtml(product.fit)} · ${escapeHtml(product.length)}</p>
+          <p class="cart-item__detail">${escapeHtml(product.sells[0])}</p>
+          <p class="cart-item__care">${escapeHtml(product.careLabel)} · ${escapeHtml(product.season)}</p>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  return `
+    ${topbar(true)}
+    <section class="page cart-page">
+      <div class="cart-heading">
+        <div>
+          <p class="cart-heading__eyebrow">模拟购物车 · 示例数据</p>
+          <h1>先挑 2—4 件，我来帮你取舍</h1>
+        </div>
+        <button class="btn btn--ghost btn--small" data-action="example-cart">一键预选 3 件通勤外套</button>
+      </div>
+
+      <div class="cart-list">${productCards}</div>
+      ${
+        state.cartSelected.length < 2
+          ? '<p class="hint">至少选择 2 件商品，我才能开始帮你比较。</p>'
+          : state.cartSelected.length >= 4
+            ? '<p class="hint">最多选择 4 件，已经到上限了。</p>'
+            : ""
+      }
+      ${
+        state.cartHint
+          ? `<p class="hint hint--warn">${escapeHtml(state.cartHint)}</p>`
+          : ""
+      }
+    </section>
+
+    <div class="cart-dock">
+      <div class="cart-dock__info">
+        <span>已选 ${state.cartSelected.length} 件</span>
+        <strong>合计 ${formatPrice(totalPrice)}</strong>
+      </div>
+      <button
+        class="btn btn--primary"
+        data-action="start-questions"
+        ${canStart ? "" : "disabled"}
+      >
+        开始比较
+      </button>
+    </div>
+  `;
+}
+
+function renderCustomItems() {
+  const items = state.customItems;
+  const canNext = items.length >= 1;
+  const cards = items
+    .map(
+      (item) => `
+        <article class="custom-item">
+          <div class="custom-item__media product-media">
+            ${
+              item.image
+                ? `<img src="${item.image}" alt="${escapeHtml(item.name)}" />`
+                : `<span class="custom-item__placeholder">暂无图片</span>`
+            }
+          </div>
+          <div class="custom-item__body">
+            <div class="custom-item__top">
+              <div>
+                <h2 class="custom-item__name">${escapeHtml(item.name)}</h2>
+                <p class="custom-item__meta">${escapeHtml(item.color)} · ${escapeHtml(item.style)} · ${escapeHtml(item.category)}</p>
+              </div>
+              <strong class="custom-item__price">${formatPrice(item.price)}</strong>
+            </div>
+            <p class="custom-item__detail">${escapeHtml(item.material || "材质待确认")} · ${escapeHtml(item.careLabel || "洗护待确认")}</p>
+            ${
+              item.link
+                ? `<a class="custom-item__link" href="${escapeHtml(item.link)}" target="_blank" rel="noreferrer">查看来源链接</a>`
+                : ""
+            }
+            <div class="custom-item__actions">
+              <button type="button" class="btn btn--ghost btn--small" data-action="edit-custom-item" data-id="${item.id}">编辑</button>
+              <button type="button" class="btn btn--ghost btn--small" data-action="delete-custom-item" data-id="${item.id}">删除</button>
+            </div>
+          </div>
+        </article>
+      `,
+    )
+    .join("");
+
+  return `
+    ${topbar(true)}
+    <section class="page custom-page">
+      <div class="cart-heading">
+        <div>
+          <p class="cart-heading__eyebrow">自定义购物决策 · 手动确认商品信息</p>
+          <h1>先添加你想比较的衣物</h1>
+        </div>
+        <button type="button" class="btn btn--primary btn--small" data-action="add-custom-item">添加商品</button>
+      </div>
+
+      ${
+        state.customForm
+          ? renderCustomForm(state.customForm)
+          : ""
+      }
+
+      ${
+        items.length
+          ? `<div class="custom-list">${cards}</div>`
+          : '<div class="empty-state">还没有添加商品，点“添加商品”开始。</div>'
+      }
+
+      ${
+        state.customHint
+          ? `<p class="hint hint--warn">${escapeHtml(state.customHint)}</p>`
+          : ""
+      }
+
+      <div class="custom-footer">
+        <p class="hint">暂无法自动获取商品链接内容，请手动填写或确认商品信息；没有可靠来源的属性会显示为“待确认”。</p>
+        <button type="button" class="btn btn--primary" data-action="start-questions" ${canNext ? "" : "disabled"}>
+          确认商品信息，进入问答
+        </button>
+      </div>
+    </section>
+  `;
+}
+
+function renderCustomForm(form) {
+  return `
+    <div class="custom-form">
+      <h2>${form.id ? "编辑商品" : "添加商品"}</h2>
+      <p class="hint">粘贴商品链接后，请确认或补充以下内容；当前为纯前端，不会自动读取购物平台页面。</p>
+      <div class="form-grid">
+        <label class="form-field form-field--wide">
+          <span>商品链接（可选）</span>
+          <input data-field="customLink" value="${escapeHtml(form.link)}" placeholder="粘贴淘宝 / 京东等商品链接" />
+        </label>
+        <label class="form-field form-field--wide">
+          <span>商品图片（可选）</span>
+          <input data-field="customImage" type="file" accept="image/*" />
+          ${form.image ? `<div class="form-thumb"><img src="${form.image}" alt="商品图片预览" /></div>` : ""}
+        </label>
+        <label class="form-field">
+          <span>商品名称</span>
+          <input data-field="customName" value="${escapeHtml(form.name)}" placeholder="例如：复古格纹西装外套" />
+        </label>
+        <label class="form-field">
+          <span>价格（元）</span>
+          <input data-field="customPrice" type="number" min="0" step="1" value="${escapeHtml(form.price)}" placeholder="例如 299" />
+        </label>
+        <label class="form-field">
+          <span>颜色</span>
+          <input data-field="customColor" value="${escapeHtml(form.color)}" placeholder="例如：深棕色" />
+        </label>
+        <label class="form-field">
+          <span>风格</span>
+          <input data-field="customStyle" value="${escapeHtml(form.style)}" placeholder="例如：复古、通勤" />
+        </label>
+        <label class="form-field">
+          <span>材质</span>
+          <input data-field="customMaterial" value="${escapeHtml(form.material)}" placeholder="例如：羊毛混纺" />
+        </label>
+        <label class="form-field">
+          <span>类别</span>
+          <input data-field="customCategory" value="${escapeHtml(form.category)}" placeholder="例如：外套、上衣" />
+        </label>
+        <label class="form-field">
+          <span>适用季节</span>
+          <input data-field="customSeason" value="${escapeHtml(form.season)}" placeholder="例如：春秋" />
+        </label>
+        <label class="form-field">
+          <span>版型</span>
+          <input data-field="customFit" value="${escapeHtml(form.fit)}" placeholder="例如：宽松" />
+        </label>
+        <label class="form-field">
+          <span>衣长</span>
+          <input data-field="customLength" value="${escapeHtml(form.length)}" placeholder="例如：中长款" />
+        </label>
+        <label class="form-field">
+          <span>洗护方式</span>
+          <select data-field="customCare">
+            ${[
+              ["", "待确认"],
+              ["machine", "可机洗"],
+              ["machineGentle", "轻柔机洗"],
+              ["dryClean", "建议干洗"],
+              ["wipe", "擦拭清洁"],
+            ]
+              .map(
+                ([value, label]) =>
+                  `<option value="${value}" ${String(form.care || "") === String(value) ? "selected" : ""}>${label}</option>`,
+              )
+              .join("")}
+          </select>
+        </label>
+        <label class="form-field form-field--wide">
+          <span>主要优势（可选，用分号或换行分隔）</span>
+          <textarea data-field="customPros" rows="2">${escapeHtml(form.pros)}</textarea>
+        </label>
+        <label class="form-field form-field--wide">
+          <span>需要权衡的地方（可选）</span>
+          <textarea data-field="customRisks" rows="2">${escapeHtml(form.risks)}</textarea>
+        </label>
+        <label class="form-field form-field--wide">
+          <span>补充说明（可选）</span>
+          <textarea data-field="customNote" rows="3" placeholder="例如：我平时喜欢复古风，但不想显得太成熟。">${escapeHtml(form.note)}</textarea>
+        </label>
+      </div>
+      <div class="result-actions">
+        <button type="button" class="btn btn--ghost" data-action="cancel-custom-form">取消</button>
+        <button type="button" class="btn btn--primary" data-action="save-custom-item">${form.id ? "保存修改" : "添加并确认"}</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderQuestions() {
+  const question = QUESTIONS[state.questionIndex];
+  const progress = Math.round(((state.questionIndex + 1) / QUESTIONS.length) * 100);
+
+  return `
+    ${topbar(true)}
+    <section class="page question-wrap">
+      <div class="progress">
+        <span>第 ${state.questionIndex + 1} / ${QUESTIONS.length} 步</span>
+        <div class="progress__bar">
+          <div class="progress__fill" style="width: ${progress}%"></div>
+        </div>
+      </div>
+
+      <div class="chat">
+        <div class="bubble bubble--friend">
+          <p class="bubble__title">${escapeHtml(question.title)}</p>
+          <p class="bubble__text">${escapeHtml(question.text)}</p>
+        </div>
+        ${renderAnswerBubble(question)}
+      </div>
+
+      <div class="question-body">${renderQuestionBody(question)}</div>
+
+      <div class="footer-actions">
+        <button class="text-btn" data-action="question-back">${
+          state.questionIndex === 0
+            ? state.mode === "custom"
+              ? "返回商品列表"
+              : "返回购物车"
+            : "上一题"
+        }</button>
+        ${renderQuestionNextButton(question)}
+      </div>
+    </section>
+  `;
+}
+
+function renderQuestionNextButton(question) {
+  if (question.id === "dealbreakers") {
+    return "";
+  }
+  if (question.id === "scenario" || question.id === "concerns" || question.id === "priorities" || question.id === "wardrobe") {
+    return '<button type="button" class="btn btn--ghost btn--small" data-action="question-next" onclick="if(window.__yijian){window.__yijian.questionNext();} event.stopPropagation(); return false;">下一题</button>';
+  }
+  if (question.id === "budget") {
+    return '<button type="button" class="btn btn--ghost btn--small" data-action="question-next" onclick="if(window.__yijian){window.__yijian.questionNext();} event.stopPropagation(); return false;">下一题</button>';
+  }
+  return "";
+}
+
+function renderAnswerBubble(question) {
+  const answers = state.answers;
+
+  if (question.id === "scenario") {
+    if (!answers.scenario) return "";
+    const scenarioLabel =
+      SCENARIO_OPTIONS.find((option) => option.value === answers.scenario)?.label || "";
+    const frequencyLabel =
+      FREQUENCY_OPTIONS.find((option) => option.value === answers.frequency)?.label || "";
+    return `
+      <div class="bubble bubble--self">
+        <p class="bubble__text">${escapeHtml(scenarioLabel)}${frequencyLabel ? ` · ${escapeHtml(frequencyLabel)}` : ""}</p>
+      </div>
+    `;
+  }
+
+  if (question.id === "concerns") {
+    if (!answers.concerns.length) return "";
+    return answerChips(answers.concerns, CONCERN_OPTIONS);
+  }
+
+  if (question.id === "priorities") {
+    if (!answers.priorities.length) return "";
+    const top = answers.topPriority
+      ? `<br /><small>最重要：${escapeHtml(PRIORITY_LABELS[answers.topPriority] || "")}</small>`
+      : "";
+    return `
+      <div class="bubble bubble--self">
+        <p class="bubble__text">${answers.priorities.map((value) => escapeHtml(PRIORITY_LABELS[value] || value)).join("、")}${top}</p>
+      </div>
+    `;
+  }
+
+  if (question.id === "wardrobe") {
+    if (!answers.wardrobe.length) return "";
+    return answerChips(answers.wardrobe, WARDROBE_OPTIONS);
+  }
+
+  if (question.id === "budget") {
+    const modeLabel = BUDGET_MODE_LABELS[answers.budgetMode] || "严格控制";
+    const text =
+      answers.budgetMode === "unlimited"
+        ? answers.budget
+          ? `不设上限，参考 ${answers.budget} 元`
+          : "不设预算上限"
+        : `${modeLabel}，预算 ${answers.budget} 元`;
+    return `
+      <div class="bubble bubble--self">
+        <p class="bubble__text">${escapeHtml(text)}</p>
+      </div>
+    `;
+  }
+
+  if (question.id === "dealbreakers") {
+    if (!answers.dealbreakers.length) {
+      return `
+        <div class="bubble bubble--self">
+          <p class="bubble__text">这些我都能接受</p>
+        </div>
+      `;
+    }
+    return answerChips(answers.dealbreakers, DEALBREAKER_OPTIONS);
+  }
+
+  return "";
+}
+
+function answerChips(values, options) {
+  const labels = values.map(
+    (value) => options.find((option) => option.value === value)?.label || value,
+  );
+  return `
+    <div class="bubble bubble--self">
+      <p class="bubble__text">${labels.map(escapeHtml).join("、")}</p>
+    </div>
+  `;
+}
+
+function renderQuestionBody(question) {
+  if (question.id === "scenario") {
+    return `
+      <div>
+        <p class="field-label">主要场景</p>
+        <div class="option-list">
+          ${SCENARIO_OPTIONS.map(
+            (option) => choiceButton("scenario", option.value, option.label, state.answers.scenario === option.value),
+          ).join("")}
+        </div>
+        <p class="field-label field-label--spaced">穿着频率（可选）</p>
+        <div class="chips">
+          ${FREQUENCY_OPTIONS.map(
+            (option) => chipButton("frequency", option.value, option.label, state.answers.frequency === option.value),
+          ).join("")}
+        </div>
+        ${
+          !state.answers.scenario || !state.answers.frequency
+            ? '<p class="hint">请先选好主要场景和穿着频率，再点“下一题”。</p>'
+            : ""
+        }
+      </div>
+    `;
+  }
+
+  if (question.id === "concerns") {
+    const full = state.answers.concerns.length >= 2;
+    return `
+      <div>
+        <div class="chips">
+          ${CONCERN_OPTIONS.map((option) => {
+            const selected = state.answers.concerns.includes(option.value);
+            const disabled = !selected && full;
+            return chipButton("concern", option.value, option.label, selected, disabled);
+          }).join("")}
+        </div>
+        <p class="hint">已选 ${state.answers.concerns.length} / 2，也可以跳过。</p>
+        ${
+          state.answers.concerns.includes("other")
+            ? `<input class="text-input" data-field="concernNote" value="${escapeHtml(state.answers.concernNote)}" placeholder="简单说说你在纠结什么" />`
+            : ""
+        }
+      </div>
+    `;
+  }
+
+  if (question.id === "priorities") {
+    const full = state.answers.priorities.length >= 3;
+    return `
+      <div>
+        <div class="chips">
+          ${PRIORITY_OPTIONS.map((option) => {
+            const selected = state.answers.priorities.includes(option.value);
+            const disabled = !selected && full;
+            return chipButton("priority", option.value, option.label, selected, disabled);
+          }).join("")}
+        </div>
+        <p class="hint">已选 ${state.answers.priorities.length} / 3，也可以跳过。</p>
+        ${
+          state.answers.priorities.length
+            ? `
+              <p class="field-label field-label--spaced">标记其中最重要的一项</p>
+              <div class="chips">
+                ${state.answers.priorities
+                  .map((value) =>
+                    chipButton(
+                      "topPriority",
+                      value,
+                      PRIORITY_LABELS[value] || value,
+                      state.answers.topPriority === value,
+                    ),
+                  )
+                  .join("")}
+              </div>
+            `
+            : ""
+        }
+      </div>
+    `;
+  }
+
+  if (question.id === "wardrobe") {
+    return `
+      <div>
+        <div class="chips">
+          ${WARDROBE_OPTIONS.map((option) => {
+            const selected = state.answers.wardrobe.includes(option.value);
+            return chipButton("wardrobe", option.value, option.label, selected);
+          }).join("")}
+        </div>
+        <p class="hint">“没有类似款”和“不太确定”不会与其他重复选项同时存在。</p>
+        <input
+          class="text-input text-input--spaced"
+          data-field="wardrobeNote"
+          value="${escapeHtml(state.answers.wardrobeNote)}"
+          placeholder="可选：简单描述你现有的衣橱或平时风格"
+        />
+      </div>
+    `;
+  }
+
+  if (question.id === "budget") {
+    const budgetValid = isBudgetValid(state.answers.budget);
+    return `
+      <div class="budget-panel">
+        <label>先选预算规则</label>
+        <div class="option-list">
+          ${BUDGET_MODES.map(
+            (mode) => `
+              <button
+                class="choice"
+                data-action="budget-mode"
+                data-value="${mode.id}"
+                data-selected="${state.answers.budgetMode === mode.id}"
+              >
+                <span>
+                  <span class="choice__label">${mode.label}</span>
+                  <span class="choice__desc">${mode.desc}</span>
+                </span>
+                <span class="choice__check">${state.answers.budgetMode === mode.id ? "✓" : ""}</span>
+              </button>
+            `,
+          ).join("")}
+        </div>
+
+        <label for="budget-input" class="budget-panel__label">人民币总预算${
+          state.answers.budgetMode === "unlimited" ? "（可选，作为参考）" : ""
+        }</label>
+        <div class="budget-row">
+          <input
+            id="budget-input"
+            data-field="budget"
+            type="number"
+            min="0"
+            step="50"
+            inputmode="numeric"
+            value="${escapeHtml(state.answers.budget || "")}"
+            placeholder="例如 700"
+          />
+          <span class="budget-row__unit">元</span>
+        </div>
+        <div class="chips">
+          ${[500, 700, 1000, 1500]
+            .map(
+              (value) => `
+                <button class="chip" data-action="budget-chip" data-value="${value}" data-selected="${String(state.answers.budget) === String(value)}">
+                  ${value} 元
+                </button>
+              `,
+            )
+            .join("")}
+        </div>
+        ${
+          state.answers.budgetMode === "unlimited"
+            ? `<p class="hint">金额仅作参考，不会因为超预算淘汰商品。</p>`
+            : state.answers.budgetMode === "flexible" && budgetValid
+              ? `<p class="hint">最多可到预算的 110%，超出部分会明确提示并扣分。</p>`
+              : state.answers.budgetMode === "strict" && budgetValid
+                ? `<p class="hint">我会严格控制，商品和组合总价都不能超过这笔预算。</p>`
+                : `<p class="hint hint--warn">先填一个大于 0 的金额，我才能继续。</p>`
+        }
+      </div>
+    `;
+  }
+
+  if (question.id === "dealbreakers") {
+    return `
+      <div>
+        <div class="chips">
+          ${DEALBREAKER_OPTIONS.map((option) =>
+            chipButton(
+              "dealbreaker",
+              option.value,
+              option.label,
+              state.answers.dealbreakers.includes(option.value),
+            ),
+          ).join("")}
+        </div>
+        <p class="hint">可以全部不选；商品详情没提供的信息，我会标记为待确认，而不是替你下判断。</p>
+        ${
+          state.answers.dealbreakers.includes("other")
+            ? `<input class="text-input" data-field="dealbreakerNote" value="${escapeHtml(state.answers.dealbreakerNote)}" placeholder="补充你的具体要求" />`
+            : ""
+        }
+        <div class="result-actions" style="margin-top: 16px">
+          <button type="button" class="btn btn--primary" data-action="finish">直接查看结果</button>
+        </div>
+      </div>
+    `;
+  }
+
+  return "";
+}
+
+function choiceButton(key, value, label, selected) {
+  return `
+    <button
+      type="button"
+      class="choice"
+      data-action="single-choice"
+      data-key="${key}"
+      data-value="${value}"
+      data-selected="${selected}"
+      onclick="if(window.__yijian){window.__yijian.answerSingle('${key}','${value}');} event.stopPropagation(); return false;"
+    >
+      <span>
+        <span class="choice__label">${label}</span>
+      </span>
+      <span class="choice__check">${selected ? "✓" : ""}</span>
+    </button>
+  `;
+}
+
+function chipButton(key, value, label, selected, disabled = false) {
+  return `
+    <button
+      type="button"
+      class="chip"
+      data-action="toggle-chip"
+      data-key="${key}"
+      data-value="${value}"
+      data-selected="${selected}"
+      onclick="if(window.__yijian){window.__yijian.toggleChip('${key}','${value}');} event.stopPropagation(); return false;"
+      ${disabled ? "disabled" : ""}
+    >
+      ${label}${selected ? '<span class="chip__mark">✓</span>' : ""}
+    </button>
+  `;
+}
+
+function renderSummary() {
+  const answers = state.answers;
+  const scenarioLabel =
+    SCENARIO_OPTIONS.find((option) => option.value === answers.scenario)?.label ||
+    "未选择";
+  const frequencyLabel =
+    FREQUENCY_OPTIONS.find((option) => option.value === answers.frequency)?.label ||
+    "未填写";
+  const budgetLabel =
+    answers.budgetMode === "unlimited"
+      ? answers.budget
+        ? `不设上限，参考 ${answers.budget} 元`
+        : "不设预算上限"
+      : `${BUDGET_MODE_LABELS[answers.budgetMode]} · ${answers.budget} 元`;
+  const prioritiesLabel = answers.priorities.length
+    ? answers.priorities
+        .map(
+          (value) =>
+            `${PRIORITY_LABELS[value] || value}${
+              value === answers.topPriority ? "（最重要）" : ""
+            }`,
+        )
+        .join("、")
+    : "未选择，按通用需求";
+  const wardrobeLabel = answers.wardrobe.length
+    ? answers.wardrobe.map(wardrobeLabel).join("、")
+    : "未填写";
+  const dealbreakerLabel = answers.dealbreakers.length
+    ? answers.dealbreakers
+        .map(
+          (value) =>
+            DEALBREAKER_OPTIONS.find((option) => option.value === value)?.label ||
+            value,
+        )
+        .join("、")
+    : "没有特别雷区";
+  const selectedNames =
+    state.mode === "custom"
+      ? state.customItems
+          .map((item) => item.name)
+          .filter(Boolean)
+          .join("、")
+      : state.cartSelected
+          .map((id) => getProduct(id)?.name)
+          .filter(Boolean)
+          .join("、");
+
+  return `
+    ${topbar(true)}
+    <section class="page question-wrap">
+      <div class="chat">
+        <div class="bubble bubble--friend">
+          <p class="bubble__title">我都记下了，这就帮你算。</p>
+          <p class="bubble__text">下面是你刚刚的答案，确认没问题就点最后一下。</p>
+        </div>
+      </div>
+
+      <div class="summary-card">
+        <h2>你的选择</h2>
+        <ul class="summary-list">
+          <li><span class="key">比较商品</span><span class="value">${escapeHtml(selectedNames)}</span></li>
+          <li><span class="key">主要场景</span><span class="value">${scenarioLabel}</span></li>
+          <li><span class="key">穿着频率</span><span class="value">${frequencyLabel}</span></li>
+          <li><span class="key">最纠结的事</span><span class="value">${answers.concerns.length ? answers.concerns.map((value) => CONCERN_OPTIONS.find((option) => option.value === value)?.label || value).join("、") : "未填写"}</span></li>
+          <li><span class="key">优先条件</span><span class="value">${prioritiesLabel}</span></li>
+          <li><span class="key">衣橱情况</span><span class="value">${wardrobeLabel}</span></li>
+          <li><span class="key">预算</span><span class="value">${escapeHtml(budgetLabel)}</span></li>
+          <li><span class="key">不可接受</span><span class="value">${dealbreakerLabel}</span></li>
+        </ul>
+      </div>
+
+      <div class="result-actions">
+        <button class="btn btn--ghost" data-action="edit-answers">改一下答案</button>
+        <button class="btn btn--primary" data-action="finish">帮我结束纠结</button>
+      </div>
+    </section>
+  `;
+}
+
+function renderResult() {
+  const result = state.result;
+  if (!result) return "";
+
+  const keepHtml = result.type === "confirm"
+    ? '<div class="empty-state">还需要补充信息后再下结论。</div>'
+    : result.keep.length
+      ? `
+          <div class="keep-list">
+            ${result.keep
+              .map(
+                (item) => `
+                  <div class="keep-item">
+                    <div class="keep-item__media product-media">
+                      ${
+                        item.image
+                          ? `<img src="${item.image}" alt="${escapeHtml(item.name)}" />`
+                          : `<span class="custom-item__placeholder">暂无图片</span>`
+                      }
+                      <span class="product-media__fallback">图片加载失败</span>
+                    </div>
+                    <div class="keep-item__main">
+                      <p class="keep-item__name">${escapeHtml(item.name)}</p>
+                      <p class="keep-item__meta">${escapeHtml(item.brand)} · ${escapeHtml(item.color)}</p>
+                    </div>
+                    <span class="keep-item__price">${formatPrice(item.price)}</span>
+                  </div>
+                `,
+              )
+              .join("")}
+          </div>
+        `
+      : '<div class="empty-state">没有推荐留下的商品，先让购物车冷静一下。</div>';
+
+  const totalHtml =
+    result.type === "recommend" && result.keep.length
+      ? `
+          <div class="section">
+            <h3 class="section__title">总价格</h3>
+            <div class="price-banner">
+              <span class="label">本次建议合计</span>
+              <span>
+                <span class="price">${formatPrice(result.totalPrice)}</span>
+                <span class="budget">${
+                  result.budgetMode === "unlimited"
+                    ? state.answers.budget
+                      ? ` / 参考预算 ${escapeHtml(state.answers.budget)} 元`
+                      : " / 未设预算上限"
+                    : ` / 预算 ${escapeHtml(state.answers.budget || "")} 元`
+                }</span>
+              </span>
+            </div>
+            ${
+              result.budgetMode === "flexible" && result.isOverBudget
+                ? `<p class="hint hint--warn">超出预算 ${formatPrice(result.overAmount)}，在 10% 容忍范围内，已计入适当扣分。</p>`
+                : ""
+            }
+          </div>
+        `
+      : "";
+
+  const reasonsHtml = result.reasons.length
+    ? `
+        <div class="section">
+          <h3 class="section__title">最重要的理由</h3>
+          <ol class="reason-list">
+            ${result.reasons.map((reason) => `<li>${escapeHtml(reason)}</li>`).join("")}
+          </ol>
+        </div>
+      `
+    : "";
+
+  const analysisHtml = result.analyses?.length
+    ? `
+        <div class="section">
+          <h3 class="section__title">商品信息提取卡片</h3>
+          <div class="analysis-list">
+            ${result.analyses.map((analysis) => renderAnalysis(analysis)).join("")}
+          </div>
+        </div>
+      `
+    : "";
+
+  const comparisonHtml = result.comparison?.length
+    ? `
+        <div class="section">
+          <h3 class="section__title">横向比较与最终取舍</h3>
+          <div class="comparison-grid">
+            ${result.comparison.map((row) => renderComparisonCard(row)).join("")}
+          </div>
+        </div>
+      `
+    : "";
+
+  return `
+    ${topbar(true)}
+    <section class="page">
+      <div class="result-card">
+        <div class="result-card__header">
+          <span class="result-card__emoji">${
+            result.type === "none"
+              ? "🤍"
+              : result.type === "confirm"
+                ? "🤔"
+                : result.keep.length > 1
+                  ? "🧺"
+                  : "✅"
+          }</span>
+          <h2 class="result-card__conclusion">
+            ${escapeHtml(result.headline)}
+            <small>${escapeHtml(result.detail || "")}</small>
+          </h2>
+        </div>
+
+        <div class="section">
+          <h3 class="section__title">建议留下的商品</h3>
+          ${keepHtml}
+        </div>
+
+        ${totalHtml}
+        ${reasonsHtml}
+        ${comparisonHtml}
+        ${analysisHtml}
+
+        <div class="result-actions">
+          <button class="btn btn--ghost" data-action="edit-answers">修改我的偏好</button>
+          ${
+            state.mode === "custom"
+              ? '<button class="btn btn--ghost" data-action="go-custom-items">返回修改商品</button>'
+              : '<button class="btn btn--ghost" data-action="go-cart">返回更换商品</button>'
+          }
+          <button class="btn btn--primary" data-action="restart-comparison">重新比较</button>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function renderAnalysis(analysis) {
+  const product = analysis.product;
+  return `
+    <details class="analysis-card">
+      <summary>
+        <span>
+          <b>${escapeHtml(product.name)}</b>
+          <small>${formatPrice(product.price)} · 匹配度约 ${analysis.matchPercent}%</small>
+        </span>
+        <span class="analysis-card__toggle">展开 / 收起</span>
+      </summary>
+      <div class="analysis-card__body">
+        <blockquote>${escapeHtml(analysis.excerpt)}</blockquote>
+        <h4>结构化商品字段</h4>
+        <ul class="analysis-fields">
+          ${analysis.fields
+            .map(
+              (field) => `
+                <li>
+                  <span>${escapeHtml(field.label)}</span>
+                  <strong>${escapeHtml(field.value)}</strong>
+                  <em>${sourceLabel(field.source)}</em>
+                </li>
+              `,
+            )
+            .join("")}
+        </ul>
+        <h4>需求匹配</h4>
+        <ul class="analysis-tags">
+          ${analysis.matches
+            .map(
+              (item) => `
+                <li class="analysis-tag analysis-tag--${statusClass(item.status)}">
+                  <b>${escapeHtml(item.label)}：${item.status}</b>
+                  <span>${escapeHtml(item.evidence)}</span>
+                  <em>${sourceLabel(item.source)}</em>
+                </li>
+              `,
+            )
+            .join("")}
+        </ul>
+        <h4>冲突与未知</h4>
+        <ul class="analysis-tags">
+          ${analysis.conflicts
+            .map(
+              (item) => `
+                <li class="analysis-tag analysis-tag--conflict">
+                  <b>${escapeHtml(item.label)}：冲突</b>
+                  <span>${escapeHtml(item.evidence)}</span>
+                </li>
+              `,
+            )
+            .join("")}
+          ${analysis.unknowns
+            .map(
+              (item) => `
+                <li class="analysis-tag analysis-tag--unknown">
+                  <b>${escapeHtml(item.label)}：未知</b>
+                  <span>${escapeHtml(item.evidence)}</span>
+                </li>
+              `,
+            )
+            .join("")}
+        </ul>
+      </div>
+    </details>
+  `;
+}
+
+function statusClass(status) {
+  if (status === "匹配") return "match";
+  if (status === "冲突") return "conflict";
+  if (status === "未知") return "unknown";
+  return "partial";
+}
+
+function renderComparisonCard(row) {
+  const product = row.product;
+  return `
+    <article class="comparison-card">
+      <div class="comparison-card__head">
+        <div class="comparison-card__media product-media">
+          ${
+            product.image
+              ? `<img src="${product.image}" alt="${escapeHtml(product.name)}" />`
+              : `<span class="custom-item__placeholder">暂无图片</span>`
+          }
+          <span class="product-media__fallback">图片加载失败</span>
+        </div>
+        <div>
+          <h3>${escapeHtml(product.name)}</h3>
+          <p>${formatPrice(product.price)} · ${escapeHtml(product.brand)}</p>
+          <span class="comparison-card__verdict">${row.isKeep ? "留下" : "淘汰"}</span>
+        </div>
+      </div>
+      <div class="comparison-card__rows">
+        <div><span>综合匹配</span><strong>${row.matchPercent}%</strong></div>
+        <div><span>最值得保留</span><strong>${escapeHtml(row.bestReason)}</strong></div>
+        <div><span>最重要的缺点或风险</span><strong>${escapeHtml(row.risk)}</strong></div>
+        <div><span>与其他商品的关键区别</span><strong>${escapeHtml(row.difference)}</strong></div>
+        <div><span>未知信息</span><strong>${escapeHtml(row.unknown)}</strong></div>
+        <div><span>最终结论</span><strong>${row.isKeep ? "留下" : "淘汰"}</strong></div>
+      </div>
+    </article>
+  `;
+}
+
+function startFlow() {
+  startDemo();
+}
+
+function startDemo() {
+  state.mode = "demo";
+  state.cartSelected = [];
+  state.answers = defaultAnswers();
+  state.cartHint = "";
+  state.screen = "cart";
+  render();
+}
+
+function startCustom() {
+  state.mode = "custom";
+  state.customItems = [];
+  state.customForm = null;
+  state.customHint = "";
+  state.answers = defaultAnswers();
+  state.screen = "custom-items";
+  render();
+}
+
+function startExample() {
+  state.cartSelected = [...EXAMPLE_IDS];
+  state.answers = defaultAnswers();
+  state.cartHint = "";
+  state.screen = "cart";
+  render();
+}
+
+function goCart() {
+  state.mode = "demo";
+  state.screen = "cart";
+  render();
+}
+
+function goCustomItems() {
+  state.mode = "custom";
+  state.customForm = null;
+  state.screen = "custom-items";
+  render();
+}
+
+function exampleCart() {
+  state.cartSelected = [...EXAMPLE_IDS];
+  state.cartHint = "";
+  render();
+}
+
+function toggleCart(id) {
+  const index = state.cartSelected.indexOf(id);
+  if (index >= 0) {
+    state.cartSelected.splice(index, 1);
+    state.cartHint = "";
+  } else if (state.cartSelected.length >= 4) {
+    state.cartHint = "最多只能比较 4 件，先取消一件再选。";
+  } else {
+    state.cartSelected.push(id);
+    state.cartHint = "";
+  }
+  render();
+}
+
+function startQuestions() {
+  if (state.mode === "custom") {
+    if (state.customItems.length < 1) {
+      state.customHint = "请先添加至少一件商品。";
+      render();
+      return;
+    }
+    state.screen = "questions";
+    state.questionIndex = 0;
+    render();
+    return;
+  }
+  if (state.cartSelected.length < 2 || state.cartSelected.length > 4) {
+    state.cartHint = "请至少选择 2 件、最多 4 件商品后再开始比较。";
+    render();
+    return;
+  }
+  state.screen = "questions";
+  state.questionIndex = 0;
+  render();
+}
+
+function answerSingle(key, value) {
+  state.answers[key] = value;
+  render();
+}
+
+function toggleChip(key, value) {
+  if (key === "frequency") {
+    state.answers.frequency = state.answers.frequency === value ? "" : value;
+    render();
+    return;
+  }
+
+  if (key === "scenario") {
+    state.answers.scenario = value;
+    render();
+    return;
+  }
+
+  if (key === "concern") {
+    const current = state.answers.concerns;
+    const index = current.indexOf(value);
+    if (index >= 0) {
+      current.splice(index, 1);
+      if (value === "other") state.answers.concernNote = "";
+    } else if (current.length < 2) {
+      current.push(value);
+    }
+    render();
+    return;
+  }
+
+  if (key === "priority") {
+    const current = state.answers.priorities;
+    const index = current.indexOf(value);
+    if (index >= 0) {
+      current.splice(index, 1);
+      if (state.answers.topPriority === value) {
+        state.answers.topPriority = current[0] || "";
+      }
+    } else if (current.length < 3) {
+      current.push(value);
+      if (!state.answers.topPriority) state.answers.topPriority = value;
+    }
+    render();
+    return;
+  }
+
+  if (key === "topPriority") {
+    state.answers.topPriority = value;
+    render();
+    return;
+  }
+
+  if (key === "wardrobe") {
+    const current = state.answers.wardrobe;
+    if (value === "none" || value === "unsure") {
+      const index = current.indexOf(value);
+      if (index >= 0) {
+        current.splice(index, 1);
+      } else {
+        state.answers.wardrobe = [value];
+      }
+    } else {
+      state.answers.wardrobe = current.filter(
+        (item) => item !== "none" && item !== "unsure",
+      );
+      const index = state.answers.wardrobe.indexOf(value);
+      if (index >= 0) state.answers.wardrobe.splice(index, 1);
+      else state.answers.wardrobe.push(value);
+    }
+    render();
+    return;
+  }
+
+  if (key === "dealbreaker") {
+    const current = state.answers.dealbreakers;
+    const index = current.indexOf(value);
+    if (index >= 0) {
+      current.splice(index, 1);
+      if (value === "other") state.answers.dealbreakerNote = "";
+    } else {
+      current.push(value);
+    }
+    render();
+    return;
+  }
+}
+
+function setBudget(value) {
+  state.answers.budget = String(value);
+  render();
+}
+
+function setBudgetMode(value) {
+  if (!BUDGET_MODE_LABELS[value]) return;
+  state.answers.budgetMode = value;
+  render();
+}
+
+function questionNext() {
+  const question = QUESTIONS[state.questionIndex];
+  if (
+    question.id === "scenario" &&
+    (!state.answers.scenario || !state.answers.frequency)
+  ) {
+    return;
+  }
+  if (question.id === "budget") {
+    const needsBudget = state.answers.budgetMode !== "unlimited";
+    if (needsBudget && !isBudgetValid(state.answers.budget)) return;
+  }
+  advanceQuestion();
+}
+
+function advanceQuestion() {
+  if (state.questionIndex < QUESTIONS.length - 1) {
+    state.questionIndex += 1;
+    render();
+  } else {
+    showSummary();
+  }
+}
+
+function showSummary() {
+  state.screen = "summary";
+  render();
+}
+
+function questionBack() {
+  if (state.questionIndex > 0) {
+    state.questionIndex -= 1;
+    render();
+  } else {
+    if (state.mode === "custom") {
+      goCustomItems();
+    } else {
+      goCart();
+    }
+  }
+}
+
+function editAnswers() {
+  state.result = null;
+  state.screen = "questions";
+  state.questionIndex = 0;
+  render();
+}
+
+function restartComparison() {
+  state.result = null;
+  state.answers = defaultAnswers();
+  state.screen = "questions";
+  state.questionIndex = 0;
+  render();
+}
+
+function finish() {
+  const ids =
+    state.mode === "custom"
+      ? state.customItems.map((item) => item.id)
+      : state.cartSelected;
+  state.result = decide(state.answers, ids, state.mode);
+  state.screen = "result";
+  render();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function goHome() {
+  state.screen = "home";
+  render();
+}
+
+function openCustomForm(id) {
+  if (id) {
+    const item = state.customItems.find((entry) => entry.id === id);
+    if (item) {
+      state.customForm = { ...item };
+    }
+  } else {
+    state.customForm = {
+      id: "",
+      name: "",
+      price: "",
+      link: "",
+      image: "",
+      color: "",
+      style: "",
+      material: "",
+      category: "",
+      season: "",
+      fit: "",
+      length: "",
+      care: "",
+      pros: "",
+      risks: "",
+      note: "",
+    };
+  }
+  render();
+}
+
+function cancelCustomForm() {
+  state.customForm = null;
+  render();
+}
+
+function saveCustomItem() {
+  const form = state.customForm;
+  if (!form) return;
+  if (!String(form.name || "").trim()) {
+    state.customHint = "请至少填写商品名称。";
+    render();
+    return;
+  }
+
+  const price = Number(form.price);
+  if (!Number.isFinite(price) || price <= 0) {
+    state.customHint = "请填写一个大于 0 的商品价格。";
+    render();
+    return;
+  }
+  const next = {
+    ...form,
+    name: String(form.name).trim(),
+    price: Number.isFinite(price) && price >= 0 ? price : 0,
+  };
+
+  if (next.id) {
+    state.customItems = state.customItems.map((item) =>
+      item.id === next.id ? next : item,
+    );
+  } else {
+    next.id = `custom-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    state.customItems = [...state.customItems, next];
+  }
+  state.customForm = null;
+  state.customHint = "";
+  render();
+}
+
+function deleteCustomItem(id) {
+  state.customItems = state.customItems.filter((item) => item.id !== id);
+  if (state.customForm && state.customForm.id === id) {
+    state.customForm = null;
+  }
+  state.customHint = "";
+  render();
+}
+
+function handleInput(event) {
+  const field = event.target.dataset.field;
+  if (!field) return;
+  if (field === "budget") state.answers.budget = event.target.value;
+  if (field === "concernNote") state.answers.concernNote = event.target.value;
+  if (field === "wardrobeNote") state.answers.wardrobeNote = event.target.value;
+  if (field === "dealbreakerNote") state.answers.dealbreakerNote = event.target.value;
+
+  if (field === "customImage" && event.target.files && event.target.files[0]) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (!state.customForm) return;
+      state.customForm.image = reader.result;
+      render();
+    };
+    reader.readAsDataURL(file);
+    return;
+  }
+
+  const customFieldMap = {
+    customLink: "link",
+    customName: "name",
+    customPrice: "price",
+    customColor: "color",
+    customStyle: "style",
+    customMaterial: "material",
+    customCategory: "category",
+    customSeason: "season",
+    customFit: "fit",
+    customLength: "length",
+    customCare: "care",
+    customPros: "pros",
+    customRisks: "risks",
+    customNote: "note",
+  };
+  if (customFieldMap[field] && state.customForm) {
+    state.customForm[customFieldMap[field]] = event.target.value;
+  }
+}
+
+function handleClick(event) {
+  const actionElement = event.target.closest("[data-action]");
+  if (!actionElement) return;
+  const action = actionElement.dataset.action;
+
+  if (action === "start-flow") return startFlow();
+  if (action === "start-demo") return startDemo();
+  if (action === "start-custom") return startCustom();
+  if (action === "start-example") return startExample();
+  if (action === "example-cart") return exampleCart();
+  if (action === "go-cart") return goCart();
+  if (action === "go-custom-items") return goCustomItems();
+  if (action === "go-home") return goHome();
+  if (action === "toggle-cart") return toggleCart(actionElement.dataset.id);
+  if (action === "start-questions") return startQuestions();
+  if (action === "question-back") return questionBack();
+  if (action === "question-next") return questionNext();
+  if (action === "single-choice") {
+    return answerSingle(actionElement.dataset.key, actionElement.dataset.value);
+  }
+  if (action === "toggle-chip") {
+    return toggleChip(actionElement.dataset.key, actionElement.dataset.value);
+  }
+  if (action === "budget-chip") return setBudget(actionElement.dataset.value);
+  if (action === "budget-mode") return setBudgetMode(actionElement.dataset.value);
+  if (action === "finish") return finish();
+  if (action === "edit-answers") return editAnswers();
+  if (action === "restart-comparison") return restartComparison();
+  if (action === "add-custom-item") return openCustomForm();
+  if (action === "edit-custom-item") return openCustomForm(actionElement.dataset.id);
+  if (action === "delete-custom-item") return deleteCustomItem(actionElement.dataset.id);
+  if (action === "save-custom-item") return saveCustomItem();
+  if (action === "cancel-custom-form") return cancelCustomForm();
+}
+
+function handleKeydown(event) {
+  if (event.key !== "Enter") return;
+  const active = document.activeElement;
+  if (active?.dataset?.field === "budget") {
+    const needsBudget = state.answers.budgetMode !== "unlimited";
+    if (needsBudget && isBudgetValid(state.answers.budget)) {
+      advanceQuestion();
+    } else if (!needsBudget) {
+      advanceQuestion();
+    }
+  }
+}
+
+function handleImageError(event) {
+  const img = event.target;
+  if (img instanceof HTMLImageElement) {
+    img.classList.add("is-broken");
+  }
+}
+
+function init() {
+  const app = document.getElementById("app");
+  if (!app) return;
+
+  window.__yijian = {
+    questionNext,
+    toggleChip,
+    answerSingle,
+  };
+  app.addEventListener("click", handleClick);
+  app.addEventListener("input", handleInput);
+  app.addEventListener("keydown", handleKeydown);
+  app.addEventListener("error", handleImageError, true);
+  render();
+}
+
+if (typeof document !== "undefined") {
+  init();
+}
+
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = {
+    PRODUCTS,
+    EXAMPLE_IDS,
+    decide,
+    evaluateProducts,
+    buildCandidates,
+    buildContext,
+    normalizeAnswers,
+  };
+}
