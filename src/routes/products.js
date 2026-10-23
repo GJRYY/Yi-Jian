@@ -6,8 +6,6 @@ const express = require("express");
 const { parseProductUrl } = require("../parsers");
 const { parseHttpUrl, UnsafeUrlError } = require("../ssrf-guard");
 
-const CARE_CODES = ["", "machine", "machineGentle", "dryClean", "wipe"];
-
 // 商品结构化字段清单（统一数据结构，前端卡片 / 确认页 / 结果页共用）
 const FIELD_LIMITS = {
   name: 200,
@@ -28,10 +26,6 @@ const FIELD_LIMITS = {
   link: 2048,
   image: 2048,
 };
-
-function fieldType(key) {
-  return key === "price" ? "number" : "string";
-}
 
 function normalizeField(key, value) {
   if (value == null) return "";
