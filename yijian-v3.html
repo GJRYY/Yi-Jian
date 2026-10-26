@@ -3176,6 +3176,11 @@ function topbar(showBack = false) {
 function renderHome() {
   return `
     ${topbar(false)}
+    ${
+      state.apiOnline === false
+        ? '<div class="api-banner">当前为在线演示版，仅「DEMO体验」可用；「添加真实商品」需要在本机运行后端（npm start）。</div>'
+        : ""
+    }
     <section class="page hero">
       <span class="hero__eyebrow">你的 AI 购物搭子</span>
       <h1>你负责心动，<span class="highlight">我负责决定</span></h1>
@@ -4978,6 +4983,11 @@ function init() {
   app.addEventListener("keydown", handleKeydown);
   app.addEventListener("error", handleImageError, true);
   render();
+  checkApi().then(() => {
+    if (state.screen === "home" && state.apiOnline === false) {
+      render();
+    }
+  });
 }
 
 if (typeof document !== "undefined") {
