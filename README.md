@@ -197,4 +197,4 @@ npm test
 
 ## 许可证
 
-[MIT License](LICENSE)。版权持有人目前写的是 `Yijian contributors`，发布前请改成你的名字或 GitHub 用户名。
+[MIT License](LICENSE)。版权持有人：GJRYY。
