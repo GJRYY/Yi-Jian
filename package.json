@@ -2,6 +2,7 @@
   "name": "yijian",
   "version": "0.2.0",
   "private": true,
+  "license": "MIT",
   "description": "衣见｜购物决策搭子（前端 + Node 后端）",
   "main": "server.js",
   "scripts": {
