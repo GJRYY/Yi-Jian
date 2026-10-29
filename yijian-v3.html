@@ -1697,153 +1697,6 @@ button:disabled {
   }
 }
 
-/* ===== 真实商品流程（第一阶段）新增样式 ===== */
-.api-banner {
-  margin: 0 0 18px;
-  padding: 12px 16px;
-  border-radius: var(--radius-sm);
-  background: #fdeee7;
-  color: var(--accent-deep);
-  border: 1px solid rgba(230, 120, 90, 0.25);
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.api-banner--ok {
-  background: #e9f3ec;
-  color: var(--good);
-  border-color: rgba(63, 122, 90, 0.25);
-}
-
-.status-pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  line-height: 1.5;
-  white-space: nowrap;
-}
-
-.status-pill--ok {
-  background: #e3efe8;
-  color: var(--good);
-}
-
-.status-pill--pending {
-  background: var(--accent-soft);
-  color: var(--accent-deep);
-}
-
-.status-pill--auto {
-  background: #e8edf7;
-  color: #45618f;
-}
-
-.status-pill--user {
-  background: #ece7f2;
-  color: #6a4f8b;
-}
-
-.status-pill--missing {
-  background: rgba(46, 43, 40, 0.06);
-  color: var(--ink-faint);
-}
-
-.parse-row {
-  display: flex;
-  gap: 8px;
-  align-items: stretch;
-}
-
-.parse-row input {
-  flex: 1;
-  min-width: 0;
-}
-
-.parse-status {
-  margin-top: 6px;
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-.parse-status--ok {
-  color: var(--good);
-}
-
-.parse-status--warn {
-  color: var(--warn);
-}
-
-.field-source-note {
-  display: block;
-  margin-top: 4px;
-  font-size: 12px;
-  color: #45618f;
-}
-
-.custom-item__status {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 8px;
-  flex-wrap: wrap;
-}
-
-.confirm-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: var(--card);
-  overflow: hidden;
-  margin: 0 0 18px;
-}
-
-.confirm-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--line);
-  flex-wrap: wrap;
-}
-
-.confirm-row:last-child {
-  border-bottom: 0;
-}
-
-.confirm-row__label {
-  color: var(--ink-soft);
-  font-size: 14px;
-}
-
-.confirm-row__value {
-  font-weight: 600;
-  text-align: right;
-  max-width: 62%;
-  overflow-wrap: anywhere;
-}
-
-.confirm-image {
-  width: 160px;
-  height: 200px;
-  margin-bottom: 16px;
-}
-
-.btn--busy {
-  opacity: 0.65;
-  pointer-events: none;
-}
-
-@media (max-width: 520px) {
-  .confirm-row__value {
-    max-width: 100%;
-    text-align: left;
-  }
-}
 </style>
   </head>
   <body>
@@ -2270,23 +2123,13 @@ const QUESTIONS = [
 ];
 
 const state = {
-  mode: "demo",
   screen: "home",
   cartSelected: [],
-  customItems: [],
-  customHint: "",
-  customForm: null,
-  customConfirmItem: null,
   questionIndex: 0,
   answers: defaultAnswers(),
   result: null,
   advancing: false,
   cartHint: "",
-  apiOnline: null,
-  saving: false,
-  parsing: false,
-  parseResult: null,
-  deciding: false,
 };
 
 function defaultAnswers() {
@@ -2316,152 +2159,8 @@ function cloneAnswers(answers) {
   };
 }
 
-// ===== 衣见后端 API 客户端（第一阶段：真实商品流程） =====
-async function apiFetch(path, options = {}) {
-  const response = await fetch(path, {
-    ...options,
-    headers: options.body ? { "content-type": "application/json" } : {},
-  });
-  let data = null;
-  try {
-    data = await response.json();
-  } catch {
-    // 非 JSON 响应按空处理
-  }
-  if (!response.ok) {
-    const error = new Error(
-      data?.error?.message || `请求失败（${response.status}）`,
-    );
-    error.code = data?.error?.code || "REQUEST_FAILED";
-    error.status = response.status;
-    throw error;
-  }
-  return data;
-}
-
-async function checkApi() {
-  try {
-    await apiFetch("/api/health");
-    state.apiOnline = true;
-    return true;
-  } catch {
-    state.apiOnline = false;
-    return false;
-  }
-}
-
-async function loadRealItems() {
-  const data = await apiFetch("/api/products");
-  state.customItems = data.products || [];
-}
-
 function getProduct(id) {
   return PRODUCTS.find((product) => product.id === id) || null;
-}
-
-function currentItemList() {
-  if (state.mode === "custom") {
-    return state.customItems.map(normalizeCustomItem);
-  }
-  return state.cartSelected.map((id) => getProduct(id)).filter(Boolean);
-}
-
-function normalizeCustomItem(raw) {
-  const price = Number(raw.price) || 0;
-  const careMap = {
-    machine: ["machine", "可机洗"],
-    machineGentle: ["machineGentle", "轻柔机洗"],
-    dryClean: ["dryClean", "建议干洗"],
-    wipe: ["wipe", "擦拭清洁"],
-  };
-  const careEntry = careMap[raw.care] || ["unknown", "待确认"];
-  const color = raw.color || "待确认";
-  const style = raw.style || "待确认";
-  const material = raw.material || "待确认";
-  const category = raw.category || "待确认";
-  const season = raw.season || "待确认";
-  const fit = raw.fit || "待确认";
-  const length = raw.length || "待确认";
-  const pros = splitList(raw.pros);
-  const risks = splitList(raw.risks);
-  const descriptionParts = [
-    raw.note,
-    raw.name,
-    color,
-    style,
-    material,
-    category,
-    season,
-    fit,
-    length,
-  ].filter(Boolean);
-
-  return {
-    id: raw.id,
-    name: raw.name || "未命名衣物",
-    brand: raw.brand || "自定义商品",
-    price,
-    color,
-    style,
-    fit,
-    length,
-    fabric: material,
-    lining: "待确认",
-    season,
-    category,
-    care: careEntry[0],
-    careLabel: careEntry[1],
-    image: raw.image || "",
-    link: raw.link || "",
-    description: descriptionParts.length
-      ? descriptionParts.join("，") + "。"
-      : "用户添加的商品，暂未提供详细信息。",
-    sells: pros.length ? pros : ["用户未填写主要优势"],
-    risks: risks.length ? risks : ["用户未填写需要权衡的地方"],
-    unknownDetails: ["洗护方式以外的细节待确认", "真实穿着效果待确认"],
-    wardrobeRisks: [],
-    flags: {
-      hardToMatch: false,
-      trendy: false,
-      extremeFit: false,
-      discomfortRisk: null,
-    },
-    scenarioScores: {
-      commute: 5,
-      casual: 5,
-      social: 5,
-      business: 5,
-      travel: 5,
-      seasonal: 5,
-      universal: 5,
-    },
-    attributeScores: {
-      versatile: 5,
-      texture: 5,
-      comfort: 5,
-      fit: 5,
-      color: 5,
-      design: 5,
-      care: careScoreByEntry(careEntry[0]),
-      season: 5,
-      value: 5,
-      wardrobe: 5,
-    },
-  };
-}
-
-function careScoreByEntry(care) {
-  if (care === "machine") return 9;
-  if (care === "machineGentle") return 8;
-  if (care === "wipe") return 6;
-  return 4;
-}
-
-function splitList(text) {
-  return String(text || "")
-    .split(/[；;\n]+/)
-    .map((item) => item.trim())
-    .filter(Boolean);
 }
 
 function escapeHtml(value) {
@@ -2540,8 +2239,6 @@ function normalizeAnswers(answers) {
 
 function sourceLabel(source) {
   if (source === "detail") return "商品明确提供";
-  if (source === "auto") return "链接解析获取";
-  if (source === "user") return "由你填写";
   if (source === "infer") return "从描述归纳";
   return "信息缺失";
 }
@@ -3010,30 +2707,12 @@ function buildComparison(analyses, keptIds) {
   });
 }
 
-function decide(answers, selectedIds, mode = "demo") {
-  const selectedProducts =
-    mode === "custom"
-      ? state.customItems.map((item) => normalizeCustomItem(item))
-      : selectedIds.map((id) => getProduct(id)).filter(Boolean);
+function decide(answers, selectedIds) {
+  const selectedProducts = selectedIds
+    .map((id) => getProduct(id))
+    .filter(Boolean);
 
-  if (selectedProducts.length < 1) {
-    return {
-      type: "confirm",
-      headline: "还需要再选几件才能比较",
-      detail:
-        mode === "custom"
-          ? "请先添加至少一件商品。"
-          : "购物车里至少选择 2 件商品，我才能帮你取舍。",
-      keep: [],
-      totalPrice: 0,
-      reasons: [],
-      analyses: [],
-      comparison: [],
-      summary: "请先返回购物车，选择 2—4 件商品。",
-    };
-  }
-
-  if (mode !== "custom" && selectedProducts.length < 2) {
+  if (selectedProducts.length < 2) {
     return {
       type: "confirm",
       headline: "还需要再选几件才能比较",
@@ -3139,10 +2818,6 @@ function render() {
 
   if (state.screen === "home") {
     app.innerHTML = renderHome();
-  } else if (state.screen === "custom-items") {
-    app.innerHTML = renderCustomItems();
-  } else if (state.screen === "custom-confirm") {
-    app.innerHTML = renderCustomConfirm(state.customConfirmItem);
   } else if (state.screen === "cart") {
     app.innerHTML = renderCart();
   } else if (state.screen === "questions") {
@@ -3176,11 +2851,6 @@ function topbar(showBack = false) {
 function renderHome() {
   return `
     ${topbar(false)}
-    ${
-      state.apiOnline === false
-        ? '<div class="api-banner">当前为在线演示版，仅「DEMO体验」可用；「添加真实商品」需要在本机运行后端（npm start）。</div>'
-        : ""
-    }
     <section class="page hero">
       <span class="hero__eyebrow">你的 AI 购物搭子</span>
       <h1>你负责心动，<span class="highlight">我负责决定</span></h1>
@@ -3191,13 +2861,9 @@ function renderHome() {
         <span>尊重选择：不盲目劝买，也可以建议一件都不买</span>
       </div>
       <div class="hero__cta">
-        <button class="btn btn--primary" data-action="start-custom">添加真实商品，帮我决策</button>
-        <button class="btn btn--ghost" data-action="start-demo">DEMO体验</button>
+        <button class="btn btn--primary" data-action="start-demo">开始体验</button>
       </div>
-      <p class="hero__footer">
-        不替你冲动下单，只帮你把选择想明白。<br />
-        真实商品流程需要先启动本地后端；DEMO 无需后端，可直接体验。
-      </p>
+      <p class="hero__footer">不替你冲动下单，只帮你把选择想明白。</p>
     </section>
   `;
 }
@@ -3284,306 +2950,6 @@ function renderCart() {
   `;
 }
 
-function renderCustomItems() {
-  const items = state.customItems;
-  const allConfirmed =
-    items.length >= 1 && items.every((item) => item.confirmed);
-  const cards = items
-    .map(
-      (item) => `
-        <article class="custom-item">
-          <div class="custom-item__media product-media">
-            ${
-              item.image
-                ? `<img src="${item.image}" alt="${escapeHtml(item.name)}" />`
-                : `<span class="custom-item__placeholder">暂无图片</span>`
-            }
-          </div>
-          <div class="custom-item__body">
-            <div class="custom-item__top">
-              <div>
-                <h2 class="custom-item__name">${escapeHtml(item.name)}</h2>
-                <p class="custom-item__meta">${escapeHtml(item.color || "颜色待确认")} · ${escapeHtml(item.style || "风格待确认")} · ${escapeHtml(item.category || "类别待确认")}</p>
-              </div>
-              <strong class="custom-item__price">${formatPrice(item.price)}</strong>
-            </div>
-            <p class="custom-item__detail">${escapeHtml(item.material || "材质待确认")} · ${escapeHtml(item.careLabel || "洗护待确认")}</p>
-            <div class="custom-item__status">
-              <span class="status-pill ${item.confirmed ? "status-pill--ok" : "status-pill--pending"}">${item.confirmed ? "资料已确认" : "待确认"}</span>
-              ${
-                item.link
-                  ? `<a class="custom-item__link" href="${escapeHtml(item.link)}" target="_blank" rel="noreferrer">查看来源链接</a>`
-                  : ""
-              }
-            </div>
-            <div class="custom-item__actions">
-              <button type="button" class="btn btn--ghost btn--small" data-action="open-custom-confirm" data-id="${item.id}">查看并确认</button>
-              <button type="button" class="btn btn--ghost btn--small" data-action="edit-custom-item" data-id="${item.id}">编辑</button>
-              <button type="button" class="btn btn--ghost btn--small" data-action="delete-custom-item" data-id="${item.id}">删除</button>
-            </div>
-          </div>
-        </article>
-      `,
-    )
-    .join("");
-
-  return `
-    ${topbar(true)}
-    <section class="page custom-page">
-      ${
-        state.apiOnline === false
-          ? '<div class="api-banner">后端服务没有连接上，真实商品流程暂时不可用。请先在本机启动后端（npm start）后刷新页面；DEMO 体验不受影响。</div>'
-          : state.apiOnline === true
-            ? '<div class="api-banner api-banner--ok">后端已连接，商品资料与上传图片保存在本地 data/ 目录。</div>'
-            : ""
-      }
-      <div class="cart-heading">
-        <div>
-          <p class="cart-heading__eyebrow">真实商品 · 粘贴链接、上传截图或手动填写</p>
-          <h1>先添加你想比较的衣物</h1>
-        </div>
-        <button type="button" class="btn btn--primary btn--small" data-action="add-custom-item" ${state.apiOnline === false ? "disabled" : ""}>添加商品</button>
-      </div>
-
-      ${
-        state.customForm
-          ? renderCustomForm(state.customForm)
-          : ""
-      }
-
-      ${
-        items.length
-          ? `<div class="custom-list">${cards}</div>`
-          : '<div class="empty-state">还没有添加商品，点“添加商品”开始；粘贴链接或上传截图都能帮你快速建档。</div>'
-      }
-
-      ${
-        state.customHint
-          ? `<p class="hint hint--warn">${escapeHtml(state.customHint)}</p>`
-          : ""
-      }
-
-      <div class="custom-footer">
-        <p class="hint">每件商品都要先「查看并确认」资料，确认后才会进入问答和决策分析；没有可靠来源的属性会显示为「待补充」。</p>
-        <button type="button" class="btn btn--primary" data-action="start-questions" ${allConfirmed && state.apiOnline !== false ? "" : "disabled"}>
-          ${items.length && !allConfirmed ? "还有商品未确认" : "确认完成，进入问答"}
-        </button>
-      </div>
-    </section>
-  `;
-}
-
-function renderCustomForm(form) {
-  const auto = form._auto || {};
-  const autoNote = (key) =>
-    auto[key]
-      ? '<em class="field-source-note">已从链接自动获取，可修改</em>'
-      : "";
-
-  return `
-    <div class="custom-form">
-      <h2>${form.id ? "编辑商品" : "添加商品"}</h2>
-      <p class="hint">粘贴商品链接后点「解析链接」，能公开读取到的字段会自动填入；淘宝、小红书等需要登录的平台无法自动解析，请用截图或手动填写。</p>
-      <div class="form-grid">
-        <label class="form-field form-field--wide">
-          <span>商品链接（可选）</span>
-          <div class="parse-row">
-            <input data-field="customLink" value="${escapeHtml(form.link)}" placeholder="粘贴商品网页链接" />
-            <button type="button" class="btn btn--ghost btn--small" data-action="parse-custom-url" ${state.parsing ? "disabled" : ""}>${state.parsing ? "解析中…" : "解析链接"}</button>
-          </div>
-          ${
-            state.parseResult
-              ? `<span class="parse-status ${state.parseResult.ok ? "parse-status--ok" : "parse-status--warn"}">${escapeHtml(state.parseResult.text)}</span>`
-              : ""
-          }
-        </label>
-        <label class="form-field form-field--wide">
-          <span>商品图片（可选，上传截图或商品图）</span>
-          <input data-field="customImage" type="file" accept="image/jpeg,image/png,image/webp" ${state.saving ? "disabled" : ""} />
-          ${form.image ? `<div class="form-thumb"><img src="${form.image}" alt="商品图片预览" /></div>` : ""}
-          <em class="field-source-note">支持 JPG / PNG / WebP，最大 5MB；图片只保存在你的本地 data/ 目录。</em>
-        </label>
-        <label class="form-field">
-          <span>商品名称（必填）</span>
-          <input data-field="customName" value="${escapeHtml(form.name)}" placeholder="例如：复古格纹西装外套" />
-          ${autoNote("name")}
-        </label>
-        <label class="form-field">
-          <span>价格，元（必填）</span>
-          <input data-field="customPrice" type="number" min="0" step="1" value="${escapeHtml(form.price)}" placeholder="例如 299" />
-          ${autoNote("price")}
-        </label>
-        <label class="form-field">
-          <span>颜色</span>
-          <input data-field="customColor" value="${escapeHtml(form.color)}" placeholder="例如：深棕色" />
-          ${autoNote("color")}
-        </label>
-        <label class="form-field">
-          <span>风格标签</span>
-          <input data-field="customStyle" value="${escapeHtml(form.style)}" placeholder="例如：复古、通勤" />
-          ${autoNote("style")}
-        </label>
-        <label class="form-field">
-          <span>材质</span>
-          <input data-field="customMaterial" value="${escapeHtml(form.material)}" placeholder="例如：羊毛混纺" />
-          ${autoNote("material")}
-        </label>
-        <label class="form-field">
-          <span>类别</span>
-          <input data-field="customCategory" value="${escapeHtml(form.category)}" placeholder="例如：外套、上衣" />
-          ${autoNote("category")}
-        </label>
-        <label class="form-field">
-          <span>适用季节</span>
-          <input data-field="customSeason" value="${escapeHtml(form.season)}" placeholder="例如：春秋" />
-          ${autoNote("season")}
-        </label>
-        <label class="form-field">
-          <span>适用场景</span>
-          <input data-field="customScenario" value="${escapeHtml(form.scenario)}" placeholder="例如：通勤、周末休闲" />
-          ${autoNote("scenario")}
-        </label>
-        <label class="form-field">
-          <span>版型</span>
-          <input data-field="customFit" value="${escapeHtml(form.fit)}" placeholder="例如：宽松" />
-        </label>
-        <label class="form-field">
-          <span>衣长</span>
-          <input data-field="customLength" value="${escapeHtml(form.length)}" placeholder="例如：中长款" />
-        </label>
-        <label class="form-field">
-          <span>品牌（可选）</span>
-          <input data-field="customBrand" value="${escapeHtml(form.brand)}" placeholder="例如：无印良品" />
-          ${autoNote("brand")}
-        </label>
-        <label class="form-field">
-          <span>洗护方式</span>
-          <select data-field="customCare">
-            ${[
-              ["", "待确认"],
-              ["machine", "可机洗"],
-              ["machineGentle", "轻柔机洗"],
-              ["dryClean", "建议干洗"],
-              ["wipe", "擦拭清洁"],
-            ]
-              .map(
-                ([value, label]) =>
-                  `<option value="${value}" ${String(form.care || "") === String(value) ? "selected" : ""}>${label}</option>`,
-              )
-              .join("")}
-          </select>
-        </label>
-        <label class="form-field form-field--wide">
-          <span>主要优势（可选，用分号或换行分隔）</span>
-          <textarea data-field="customPros" rows="2">${escapeHtml(form.pros)}</textarea>
-        </label>
-        <label class="form-field form-field--wide">
-          <span>需要权衡的地方（可选）</span>
-          <textarea data-field="customRisks" rows="2">${escapeHtml(form.risks)}</textarea>
-        </label>
-        <label class="form-field form-field--wide">
-          <span>补充说明（可选）</span>
-          <textarea data-field="customNote" rows="3" placeholder="例如：我平时喜欢复古风，但不想显得太成熟。">${escapeHtml(form.note)}</textarea>
-        </label>
-      </div>
-      <div class="result-actions">
-        <button type="button" class="btn btn--ghost" data-action="cancel-custom-form">取消</button>
-        <button type="button" class="btn btn--primary ${state.saving ? "btn--busy" : ""}" data-action="save-custom-item">${state.saving ? "保存中…" : form.id ? "保存修改" : "保存商品资料"}</button>
-      </div>
-    </div>
-  `;
-}
-
-const CONFIRM_FIELDS = [
-  ["name", "商品名称"],
-  ["price", "价格"],
-  ["category", "类别"],
-  ["color", "颜色"],
-  ["material", "材质"],
-  ["fit", "版型"],
-  ["style", "风格标签"],
-  ["scenario", "适用场景"],
-  ["season", "季节"],
-  ["length", "衣长"],
-  ["care", "洗护方式"],
-  ["brand", "品牌"],
-  ["description", "补充描述"],
-  ["pros", "主要优势"],
-  ["risks", "需要权衡"],
-];
-
-function fieldBadge(entry) {
-  if (!entry || entry.value == null || String(entry.value).trim() === "") {
-    return '<span class="status-pill status-pill--missing">待补充</span>';
-  }
-  if (entry.source === "auto") {
-    return '<span class="status-pill status-pill--auto">自动获取</span>';
-  }
-  return '<span class="status-pill status-pill--user">你填写的</span>';
-}
-
-function renderCustomConfirm(item) {
-  if (!item) return "";
-  const fields = item.fields || {};
-  const rows = CONFIRM_FIELDS.map(([key, label]) => {
-    const entry = fields[key] || {};
-    const raw = entry.value;
-    let display =
-      raw == null || String(raw).trim() === "" ? "待补充" : String(raw);
-    if (key === "price" && raw) display = formatPrice(Number(raw));
-    if (key === "care") display = item.careLabel || "待补充";
-    return `
-      <div class="confirm-row">
-        <span class="confirm-row__label">${label}</span>
-        <span class="confirm-row__value">${escapeHtml(display)}</span>
-        ${fieldBadge(entry)}
-      </div>
-    `;
-  }).join("");
-
-  return `
-    ${topbar(true)}
-    <section class="page custom-page">
-      <div class="cart-heading">
-        <div>
-          <p class="cart-heading__eyebrow">确认商品资料 · 确认后才进入决策</p>
-          <h1>${escapeHtml(item.name)}</h1>
-        </div>
-        <span class="status-pill ${item.confirmed ? "status-pill--ok" : "status-pill--pending"}">${item.confirmed ? "已确认" : "待确认"}</span>
-      </div>
-
-      <div class="product-media confirm-image">
-        ${
-          item.image
-            ? `<img src="${item.image}" alt="${escapeHtml(item.name)}" />`
-            : '<span class="custom-item__placeholder">暂无图片</span>'
-        }
-      </div>
-
-      ${
-        item.link
-          ? `<p style="margin: 0 0 14px;"><a class="custom-item__link" href="${escapeHtml(item.link)}" target="_blank" rel="noreferrer">打开来源链接</a></p>`
-          : ""
-      }
-
-      <div class="confirm-list">${rows}</div>
-
-      <p class="hint">「自动获取」表示来自链接解析；「你填写的」表示手动输入或上传；「待补充」表示还没有可靠信息，分析时会如实标注为未知。</p>
-      ${
-        state.customHint
-          ? `<p class="hint hint--warn">${escapeHtml(state.customHint)}</p>`
-          : ""
-      }
-
-      <div class="result-actions">
-        <button class="btn btn--ghost" data-action="go-custom-items">返回列表</button>
-        <button class="btn btn--ghost" data-action="edit-custom-item" data-id="${item.id}">编辑资料</button>
-        <button class="btn btn--primary ${state.saving ? "btn--busy" : ""}" data-action="confirm-custom-item" data-id="${item.id}">${item.confirmed ? "重新确认" : "确认商品信息，继续"}</button>
-      </div>
-    </section>
-  `;
-}
-
 function renderQuestions() {
   const question = QUESTIONS[state.questionIndex];
   const progress = Math.round(((state.questionIndex + 1) / QUESTIONS.length) * 100);
@@ -3611,9 +2977,7 @@ function renderQuestions() {
       <div class="footer-actions">
         <button class="text-btn" data-action="question-back">${
           state.questionIndex === 0
-            ? state.mode === "custom"
-              ? "返回商品列表"
-              : "返回购物车"
+            ? "返回购物车"
             : "上一题"
         }</button>
         ${renderQuestionNextButton(question)}
@@ -3979,16 +3343,10 @@ function renderSummary() {
         )
         .join("、")
     : "没有特别雷区";
-  const selectedNames =
-    state.mode === "custom"
-      ? state.customItems
-          .map((item) => item.name)
-          .filter(Boolean)
-          .join("、")
-      : state.cartSelected
-          .map((id) => getProduct(id)?.name)
-          .filter(Boolean)
-          .join("、");
+  const selectedNames = state.cartSelected
+    .map((id) => getProduct(id)?.name)
+    .filter(Boolean)
+    .join("、");
 
   return `
     ${topbar(true)}
@@ -4014,15 +3372,9 @@ function renderSummary() {
         </ul>
       </div>
 
-      ${
-        state.customHint
-          ? `<p class="hint hint--warn">${escapeHtml(state.customHint)}</p>`
-          : ""
-      }
-
       <div class="result-actions">
         <button class="btn btn--ghost" data-action="edit-answers">改一下答案</button>
-        <button class="btn btn--primary ${state.deciding ? "btn--busy" : ""}" data-action="finish">${state.deciding ? "正在分析…" : "帮我结束纠结"}</button>
+        <button class="btn btn--primary" data-action="finish">帮我结束纠结</button>
       </div>
     </section>
   `;
@@ -4154,11 +3506,7 @@ function renderResult() {
 
         <div class="result-actions">
           <button class="btn btn--ghost" data-action="edit-answers">修改我的偏好</button>
-          ${
-            state.mode === "custom"
-              ? '<button class="btn btn--ghost" data-action="go-custom-items">返回修改商品</button>'
-              : '<button class="btn btn--ghost" data-action="go-cart">返回更换商品</button>'
-          }
+          <button class="btn btn--ghost" data-action="go-cart">返回更换商品</button>
           <button class="btn btn--primary" data-action="restart-comparison">重新比较</button>
         </div>
       </div>
@@ -4278,34 +3626,10 @@ function startFlow() {
 }
 
 function startDemo() {
-  state.mode = "demo";
   state.cartSelected = [];
   state.answers = defaultAnswers();
   state.cartHint = "";
   state.screen = "cart";
-  render();
-}
-
-async function startCustom() {
-  state.mode = "custom";
-  state.customItems = [];
-  state.customForm = null;
-  state.customConfirmItem = null;
-  state.customHint = "";
-  state.parseResult = null;
-  state.answers = defaultAnswers();
-  state.screen = "custom-items";
-  render();
-  await checkApi();
-  if (!state.apiOnline) {
-    render();
-    return;
-  }
-  try {
-    await loadRealItems();
-  } catch (err) {
-    state.customHint = err.message || "读取商品列表失败";
-  }
   render();
 }
 
@@ -4318,17 +3642,7 @@ function startExample() {
 }
 
 function goCart() {
-  state.mode = "demo";
   state.screen = "cart";
-  render();
-}
-
-function goCustomItems() {
-  state.mode = "custom";
-  state.customForm = null;
-  state.customConfirmItem = null;
-  state.parseResult = null;
-  state.screen = "custom-items";
   render();
 }
 
@@ -4353,44 +3667,11 @@ function toggleCart(id) {
 }
 
 function startQuestions() {
-  if (state.mode === "custom") {
-    startRealQuestions();
-    return;
-  }
   if (state.cartSelected.length < 2 || state.cartSelected.length > 4) {
     state.cartHint = "请至少选择 2 件、最多 4 件商品后再开始比较。";
     render();
     return;
   }
-  state.screen = "questions";
-  state.questionIndex = 0;
-  render();
-}
-
-async function startRealQuestions() {
-  if (!state.apiOnline) {
-    state.customHint = "无法连接后端，请确认已运行 npm start，然后重试。";
-    render();
-    return;
-  }
-  try {
-    await loadRealItems();
-  } catch (err) {
-    state.customHint = err.message || "读取商品列表失败";
-    render();
-    return;
-  }
-  if (state.customItems.length < 1) {
-    state.customHint = "请先添加至少一件商品。";
-    render();
-    return;
-  }
-  if (!state.customItems.every((item) => item.confirmed)) {
-    state.customHint = "还有商品资料没有确认，请先「查看并确认」每一件商品。";
-    render();
-    return;
-  }
-  state.customHint = "";
   state.screen = "questions";
   state.questionIndex = 0;
   render();
@@ -4529,11 +3810,7 @@ function questionBack() {
     state.questionIndex -= 1;
     render();
   } else {
-    if (state.mode === "custom") {
-      goCustomItems();
-    } else {
-      goCart();
-    }
+    goCart();
   }
 }
 
@@ -4552,37 +3829,8 @@ function restartComparison() {
   render();
 }
 
-async function finish() {
-  const ids =
-    state.mode === "custom"
-      ? state.customItems.map((item) => item.id)
-      : state.cartSelected;
-  if (state.mode === "custom") {
-    if (state.deciding) return;
-    state.deciding = true;
-    state.customHint = "";
-    render();
-    try {
-      const data = await apiFetch("/api/decision/analyze", {
-        method: "POST",
-        body: JSON.stringify({
-          productIds: ids,
-          answers: cloneAnswers(state.answers),
-        }),
-      });
-      state.result = data;
-      state.screen = "result";
-      state.deciding = false;
-      render();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch (err) {
-      state.deciding = false;
-      state.customHint = err.message || "分析没有完成，请重试";
-      render();
-    }
-    return;
-  }
-  state.result = decide(state.answers, ids, state.mode);
+function finish() {
+  state.result = decide(state.answers, state.cartSelected);
   state.screen = "result";
   render();
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -4593,254 +3841,6 @@ function goHome() {
   render();
 }
 
-function openCustomForm(id) {
-  if (id) {
-    const item = state.customItems.find((entry) => entry.id === id);
-    if (item) {
-      state.customForm = {
-        ...item,
-        _auto: Object.fromEntries(
-          Object.entries(item.fields || {})
-            .filter(([, field]) => field.source === "auto" && field.value != null && field.value !== "")
-            .map(([key, field]) => [key, field.value]),
-        ),
-      };
-    }
-  } else {
-    state.customForm = {
-      id: "",
-      name: "",
-      price: "",
-      link: "",
-      image: "",
-      color: "",
-      style: "",
-      material: "",
-      category: "",
-      scenario: "",
-      season: "",
-      fit: "",
-      length: "",
-      care: "",
-      brand: "",
-      pros: "",
-      risks: "",
-      note: "",
-      _auto: {},
-    };
-  }
-  state.customHint = "";
-  state.parseResult = null;
-  render();
-}
-
-function cancelCustomForm() {
-  state.customForm = null;
-  render();
-}
-
-async function saveCustomItem() {
-  const form = state.customForm;
-  if (!form || state.saving) return;
-  if (!String(form.name || "").trim()) {
-    state.customHint = "请至少填写商品名称。";
-    render();
-    return;
-  }
-
-  const price = Number(form.price);
-  if (!Number.isFinite(price) || price <= 0) {
-    state.customHint = "请填写一个大于 0 的商品价格。";
-    render();
-    return;
-  }
-
-  state.saving = true;
-  state.customHint = "";
-  render();
-
-  const flat = {
-    name: String(form.name).trim(),
-    price,
-    link: String(form.link || "").trim(),
-    image: form.image || "",
-    color: form.color || "",
-    style: form.style || "",
-    material: form.material || "",
-    category: form.category || "",
-    scenario: form.scenario || "",
-    season: form.season || "",
-    fit: form.fit || "",
-    length: form.length || "",
-    care: form.care || "",
-    brand: form.brand || "",
-    description: form.note || form.description || "",
-    pros: form.pros || "",
-    risks: form.risks || "",
-  };
-  // 来自链接解析、且用户没有修改过的字段，保持「自动获取」来源标注
-  const autoFields = Object.entries(form._auto || {})
-    .filter(([key, value]) => String(form[key] ?? "") === String(value))
-    .map(([key]) => key);
-
-  try {
-    if (form.id) {
-      const data = await apiFetch(`/api/products/${form.id}`, {
-        method: "PATCH",
-        body: JSON.stringify({ ...flat, autoFields }),
-      });
-      state.customItems = state.customItems.map((item) =>
-        item.id === data.product.id ? data.product : item,
-      );
-    } else {
-      const data = await apiFetch("/api/products", {
-        method: "POST",
-        body: JSON.stringify({ ...flat, autoFields }),
-      });
-      state.customItems = [...state.customItems, data.product];
-    }
-    state.customForm = null;
-    state.customHint = "";
-    state.parseResult = null;
-  } catch (err) {
-    state.customHint = err.message || "保存失败，请确认后端已启动。";
-  } finally {
-    state.saving = false;
-  }
-  render();
-}
-
-async function deleteCustomItem(id) {
-  if (state.saving) return;
-  state.saving = true;
-  render();
-  try {
-    await apiFetch(`/api/products/${id}`, { method: "DELETE" });
-    state.customItems = state.customItems.filter((item) => item.id !== id);
-    if (state.customForm && state.customForm.id === id) state.customForm = null;
-    if (state.customConfirmItem && state.customConfirmItem.id === id) {
-      state.customConfirmItem = null;
-    }
-    state.customHint = "";
-  } catch (err) {
-    state.customHint = err.message || "删除失败，请重试";
-  } finally {
-    state.saving = false;
-  }
-  render();
-}
-
-async function parseCustomUrl() {
-  const form = state.customForm;
-  if (!form || state.parsing) return;
-  const link = String(form.link || "").trim();
-  if (!link) {
-    state.parseResult = { ok: false, text: "请先粘贴商品链接。" };
-    render();
-    return;
-  }
-  state.parsing = true;
-  state.parseResult = { ok: true, text: "正在读取页面的公开商品信息…" };
-  render();
-
-  try {
-    const data = await apiFetch("/api/products/parse-url", {
-      method: "POST",
-      body: JSON.stringify({ url: link }),
-    });
-
-    if (data.status === "unsupported") {
-      state.parseResult = { ok: false, text: data.message || "该平台暂不支持自动解析，请手动填写。" };
-      return;
-    }
-    if (data.status === "failed") {
-      state.parseResult = {
-        ok: false,
-        text: `解析失败：${data.message || "页面无法读取"}。可以直接手动填写，不影响后续流程。`,
-      };
-      return;
-    }
-
-    const fieldMap = {
-      name: "name",
-      price: "price",
-      category: "category",
-      color: "color",
-      material: "material",
-      fit: "fit",
-      style: "style",
-      scenario: "scenario",
-      season: "season",
-      length: "length",
-      care: "care",
-      brand: "brand",
-      description: "description",
-      image: "image",
-    };
-    const auto = {};
-    for (const [key, entry] of Object.entries(data.fields || {})) {
-      const target = fieldMap[key];
-      if (!target || entry.value == null || entry.value === "") continue;
-      form[target] = key === "price" ? String(entry.value) : entry.value;
-      auto[target] = entry.value;
-    }
-    form._auto = { ...(form._auto || {}), ...auto };
-    const count = Object.keys(auto).length;
-    const warnings = (data.warnings || []).join(" ");
-    state.parseResult = {
-      ok: true,
-      text: count
-        ? `已自动填入 ${count} 个字段，请核对后保存。${warnings}`
-        : "没有读取到可用的商品字段，请手动填写。",
-    };
-  } catch (err) {
-    state.parseResult = {
-      ok: false,
-      text: `解析没有完成：${err.message || "请稍后再试"}`,
-    };
-  } finally {
-    state.parsing = false;
-  }
-  render();
-}
-
-function openCustomConfirm(id) {
-  const item = state.customItems.find((entry) => entry.id === id);
-  if (!item) return;
-  state.customConfirmItem = item;
-  state.customHint = "";
-  state.screen = "custom-confirm";
-  render();
-}
-
-async function confirmCustomItem(id) {
-  if (state.saving) return;
-  state.saving = true;
-  state.customHint = "";
-  render();
-  let ok = false;
-  try {
-    const data = await apiFetch(`/api/products/${id}/confirm`, {
-      method: "POST",
-    });
-    state.customItems = state.customItems.map((item) =>
-      item.id === id ? data.product : item,
-    );
-    state.customConfirmItem = data.product;
-    ok = true;
-  } catch (err) {
-    state.customHint = err.message || "确认失败，请重试";
-  } finally {
-    state.saving = false;
-  }
-  if (ok) {
-    state.customConfirmItem = null;
-    state.customHint = "";
-    state.screen = "custom-items";
-  }
-  render();
-}
-
 function handleInput(event) {
   const field = event.target.dataset.field;
   if (!field) return;
@@ -4848,67 +3848,6 @@ function handleInput(event) {
   if (field === "concernNote") state.answers.concernNote = event.target.value;
   if (field === "wardrobeNote") state.answers.wardrobeNote = event.target.value;
   if (field === "dealbreakerNote") state.answers.dealbreakerNote = event.target.value;
-
-  if (field === "customImage" && event.target.files && event.target.files[0]) {
-    const file = event.target.files[0];
-    if (!/^image\/(jpeg|png|webp)$/.test(file.type)) {
-      state.customHint = "只支持 JPG、PNG 或 WebP 格式的图片。";
-      render();
-      return;
-    }
-    if (file.size > 5 * 1024 * 1024) {
-      state.customHint = "图片不能超过 5MB。";
-      render();
-      return;
-    }
-    state.saving = true;
-    state.customHint = "";
-    render();
-    const body = new FormData();
-    body.append("image", file);
-    fetch("/api/uploads", { method: "POST", body })
-      .then(async (response) => {
-        const data = await response.json().catch(() => null);
-        if (!response.ok) {
-          throw new Error(data?.error?.message || "上传失败");
-        }
-        if (state.customForm) {
-          state.customForm.image = data.url;
-          if (!state.customForm._auto) state.customForm._auto = {};
-          delete state.customForm._auto.image;
-        }
-      })
-      .catch((err) => {
-        state.customHint = err.message || "上传失败，请重试";
-      })
-      .finally(() => {
-        state.saving = false;
-        render();
-      });
-    return;
-  }
-
-  const customFieldMap = {
-    customLink: "link",
-    customName: "name",
-    customPrice: "price",
-    customColor: "color",
-    customStyle: "style",
-    customMaterial: "material",
-    customCategory: "category",
-    customScenario: "scenario",
-    customSeason: "season",
-    customFit: "fit",
-    customLength: "length",
-    customCare: "care",
-    customBrand: "brand",
-    customPros: "pros",
-    customRisks: "risks",
-    customNote: "note",
-  };
-  if (customFieldMap[field] && state.customForm) {
-    state.customForm[customFieldMap[field]] = event.target.value;
-  }
 }
 
 function handleClick(event) {
@@ -4918,11 +3857,9 @@ function handleClick(event) {
 
   if (action === "start-flow") return startFlow();
   if (action === "start-demo") return startDemo();
-  if (action === "start-custom") return startCustom();
   if (action === "start-example") return startExample();
   if (action === "example-cart") return exampleCart();
   if (action === "go-cart") return goCart();
-  if (action === "go-custom-items") return goCustomItems();
   if (action === "go-home") return goHome();
   if (action === "toggle-cart") return toggleCart(actionElement.dataset.id);
   if (action === "start-questions") return startQuestions();
@@ -4939,14 +3876,6 @@ function handleClick(event) {
   if (action === "finish") return finish();
   if (action === "edit-answers") return editAnswers();
   if (action === "restart-comparison") return restartComparison();
-  if (action === "add-custom-item") return openCustomForm();
-  if (action === "edit-custom-item") return openCustomForm(actionElement.dataset.id);
-  if (action === "delete-custom-item") return deleteCustomItem(actionElement.dataset.id);
-  if (action === "save-custom-item") return saveCustomItem();
-  if (action === "cancel-custom-form") return cancelCustomForm();
-  if (action === "parse-custom-url") return parseCustomUrl();
-  if (action === "open-custom-confirm") return openCustomConfirm(actionElement.dataset.id);
-  if (action === "confirm-custom-item") return confirmCustomItem(actionElement.dataset.id);
 }
 
 function handleKeydown(event) {
@@ -4983,11 +3912,6 @@ function init() {
   app.addEventListener("keydown", handleKeydown);
   app.addEventListener("error", handleImageError, true);
   render();
-  checkApi().then(() => {
-    if (state.screen === "home" && state.apiOnline === false) {
-      render();
-    }
-  });
 }
 
 if (typeof document !== "undefined") {
